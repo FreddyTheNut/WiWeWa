@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:SMPHCracker.ViewModel"
+             x:Class="WiWeWa.App">
+	<Application.Resources>
+
+        <ResourceDictionary>
+            <vm:ViewModelLocator x:Key="ViewModelLocator"/>
+
+            <Color x:Key="BackgroundColor" Value="#000000"/>
+
+            <Color x:Key="PrimaryColor" Value="#000b49"/>
+            <Color x:Key="PrimaryLightColor" Value="#373075"/>
+            <Color x:Key="PrimaryDarkColor" Value="#000023"/>
+
+            <Color x:Key="SecondaryColor" Value="#005142"/>
+            <Color x:Key="SecondaryLightColor" Value="#3a7e6d"/>
+            <Color x:Key="SecondaryDarkColor" Value="#00281b"/>
+        </ResourceDictionary>
+
+    </Application.Resources>
+</Application>
