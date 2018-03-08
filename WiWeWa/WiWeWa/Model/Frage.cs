@@ -16,7 +16,7 @@ namespace WiWeWa.Model
         private int richtigeAnzahl;
         private int wiederholung = 0;
         private FrageStatus status;
-        private List<Antwort> antworten;
+        private List<Antwort> antworten = new List<Antwort>();
 
         public int Id { get => id; set => id = value; }
         public int PruefungNR { get => pruefungNR; set => pruefungNR = value; }
