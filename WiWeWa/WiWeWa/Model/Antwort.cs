@@ -4,7 +4,7 @@ using System.Text;
 
 namespace WiWeWa.Model
 {
-    class Antwort
+    public class Antwort
     {
         private int id;
         private int frageNR;

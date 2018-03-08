@@ -8,15 +8,15 @@
         <ResourceDictionary>
             <vm:ViewModelLocator x:Key="ViewModelLocator"/>
 
-            <Color x:Key="BackgroundColor" Value="#000000"/>
+            <Color x:Key="BackgroundColor">#000000</Color>
 
-            <Color x:Key="PrimaryColor" Value="#000b49"/>
-            <Color x:Key="PrimaryLightColor" Value="#373075"/>
-            <Color x:Key="PrimaryDarkColor" Value="#000023"/>
+            <Color x:Key="PrimaryColor">#000b49</Color>
+            <Color x:Key="PrimaryLightColor">#373075</Color>
+            <Color x:Key="PrimaryDarkColor">#000023</Color>
 
-            <Color x:Key="SecondaryColor" Value="#005142"/>
-            <Color x:Key="SecondaryLightColor" Value="#3a7e6d"/>
-            <Color x:Key="SecondaryDarkColor" Value="#00281b"/>
+            <Color x:Key="SecondaryColor">#005142</Color>
+            <Color x:Key="SecondaryLightColor">#3a7e6d</Color>
+            <Color x:Key="SecondaryDarkColor">#00281b</Color>
         </ResourceDictionary>
 
     </Application.Resources>

@@ -7,7 +7,7 @@ using WiWeWa.ViewModel.Helper;
 
 namespace WiWeWa.ViewModel.ModelViewModel
 {
-    class FrageViewModel : NotifyPropertyChanged
+    public class FrageViewModel : NotifyPropertyChanged
     {
         private Frage frage = new Frage();
 
@@ -119,5 +119,6 @@ namespace WiWeWa.ViewModel.ModelViewModel
                 }
             }
         }
+        public List<Antwort> Antworten { get => frage.Antworten; set => frage.Antworten = value; }
     }
 }

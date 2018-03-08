@@ -5,7 +5,7 @@ using WiWeWa.Model.Enum;
 
 namespace WiWeWa.Model
 {
-    class Frage
+    public class Frage
     {
         private int id;
         private int pruefungNR;
@@ -27,6 +27,6 @@ namespace WiWeWa.Model
         public int RichtigeAnzahl { get => richtigeAnzahl; set => richtigeAnzahl = value; }
         public int Wiederholung { get => wiederholung; set => wiederholung = value; }
         public FrageStatus Status { get => status; set => status = value; }
-        private List<Antwort> Antworten { get => antworten; set => antworten = value; }
+        public List<Antwort> Antworten { get => antworten; set => antworten = value; }
     }
 }

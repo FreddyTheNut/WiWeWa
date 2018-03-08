@@ -16,6 +16,6 @@ namespace WiWeWa.Model
         public int Jahr { get => jahr; set => jahr = value; }
         public string Jahreszeit { get => jahreszeit; set => jahreszeit = value; }
         public string Situation { get => situation; set => situation = value; }
-        private List<Frage> Fragen { get => fragen; set => fragen = value; }
+        public List<Frage> Fragen { get => fragen; set => fragen = value; }
     }
 }

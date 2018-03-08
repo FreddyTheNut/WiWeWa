@@ -6,7 +6,7 @@ using WiWeWa.ViewModel.Helper;
 
 namespace WiWeWa.ViewModel.ModelViewModel
 {
-    class PruefungViewModel : NotifyPropertyChanged
+    public class PruefungViewModel : NotifyPropertyChanged
     {
         private Pruefung pruefung = new Pruefung();
 
@@ -58,5 +58,6 @@ namespace WiWeWa.ViewModel.ModelViewModel
                 }
             }
         }
+        public List<Frage> Fragen { get => pruefung.Fragen; set => pruefung.Fragen = value; }
     }
 }

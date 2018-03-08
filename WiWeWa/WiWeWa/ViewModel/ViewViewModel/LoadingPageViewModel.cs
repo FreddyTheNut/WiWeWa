@@ -9,7 +9,28 @@ namespace WiWeWa.ViewModel.ViewViewModel
     {
         public LoadingPageViewModel()
         {
-            string path = DependencyService.Get<IDependency>().GetLocalFilePath("Datenbank.sql");
+            LoadData();
+        }
+
+        private void LoadData()
+        {
+            DataViewModel.SetPruefungen(new DatabaseViewModel().GetAllPruefungen());
+        }
+
+        private void Continue()
+        {
+            PageController.OpenPage(typeof(TrialPageViewModel));
+        }
+
+        public Command ButtonContinue_Clicked
+        {
+            get
+            {
+                return new Command(() =>
+                {
+                    Continue();
+                });
+            }
         }
     }
 }
