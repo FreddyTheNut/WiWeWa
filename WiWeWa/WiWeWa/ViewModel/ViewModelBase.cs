@@ -19,5 +19,10 @@ namespace WiWeWa.ViewModel
         {
             PageController.OpenPage(viewModel, GetType());
         }
+
+        public void NavigatePage(Type viewModel)
+        {
+            PageController.NavigatePage(viewModel);
+        }
     }
 }

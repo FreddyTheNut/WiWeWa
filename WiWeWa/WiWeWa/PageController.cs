@@ -12,7 +12,7 @@ namespace WiWeWa
 {
     public sealed class PageController
     {
-        private static Dictionary<Type, int> viewModels = new Dictionary<Type, int>()
+        private static Dictionary<Type, int> viewModelsDic = new Dictionary<Type, int>()
         {
             {typeof(LoadingPageViewModel), 0 },
             {typeof(TrialPageViewModel), 1 },
@@ -21,31 +21,14 @@ namespace WiWeWa
 
         public static void OpenPage(Type viewModel)
         {
-            Page page = null;
-
-            switch (viewModels[viewModel])
-            {
-                case 0:
-                    page = new LoadingPage();
-                    break;
-
-                case 1:
-                    page = new TrialPage();
-                    break;
-
-                case 2:
-                    page = new MainPage();
-                    break;
-            }
-
-            Device.BeginInvokeOnMainThread(() => App.Current.MainPage = page);
+            Device.BeginInvokeOnMainThread(() => App.Current.MainPage = GetPage(viewModel));
         }
 
         public static void OpenPage(Type viewModel, Type viewModelClose)
         {
             OpenPage(viewModel);
 
-            switch (viewModels[viewModelClose])
+            switch (viewModelsDic[viewModelClose])
             {
                 case 0:
                     ViewModelLocator.ClearLoadingPageViewModel();
@@ -59,6 +42,42 @@ namespace WiWeWa
                     ViewModelLocator.ClearMainPageViewModel();
                     break;
             }
+        }
+
+        public static void NavigatePage(Type viewModel)
+        {
+            Page page = GetPage(viewModel);
+
+            INavigation navigation = App.Current.MainPage.Navigation;
+
+            if (navigation.NavigationStack.Count < 0)
+            {
+                Device.BeginInvokeOnMainThread(() => navigation.PushAsync(page));
+            }            
+            else
+            {
+                NavigationPage navigationPage = new NavigationPage(App.Current.MainPage);
+                navigationPage.PushAsync(page);
+
+                Device.BeginInvokeOnMainThread(() => App.Current.MainPage = navigationPage);
+            }
+        }
+
+        private static Page GetPage(Type viewModel)
+        {
+            switch (viewModelsDic[viewModel])
+            {
+                case 0:
+                    return new LoadingPage();
+
+                case 1:
+                    return new TrialPage();
+
+                case 2:
+                    return new MainPage();
+            }
+
+            return null;
         }
     }
 }
