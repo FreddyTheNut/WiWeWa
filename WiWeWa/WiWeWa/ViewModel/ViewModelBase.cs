@@ -1,20 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace WiWeWa.ViewModel.Helper
+namespace WiWeWa.ViewModel
 {
-    public abstract class NotifyPropertyChanged : INotifyPropertyChanged
+    public abstract class ViewModelBase : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected void OnPropertyChanged([CallerMemberName] string callerName = "")
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(callerName)) ;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(callerName));
+        }
+
+        public void OpenPage(Type viewModel)
+        {
+            PageController.OpenPage(viewModel, GetType());
         }
     }
 }

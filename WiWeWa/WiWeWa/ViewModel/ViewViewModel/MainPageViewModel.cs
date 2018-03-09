@@ -5,7 +5,7 @@ using Xamarin.Forms;
 
 namespace WiWeWa.ViewModel.ViewViewModel
 {
-    public class MainPageViewModel
+    public class MainPageViewModel : ViewModelBase
     {
         public MainPageViewModel()
         {

@@ -8,7 +8,7 @@ using Xamarin.Forms;
 
 namespace WiWeWa.ViewModel.ViewViewModel
 {
-    public class LoadingPageViewModel
+    public class LoadingPageViewModel : ViewModelBase
     {
         public LoadingPageViewModel()
         {
@@ -21,7 +21,7 @@ namespace WiWeWa.ViewModel.ViewViewModel
 
             Task.Delay(TimeSpan.FromSeconds(3)).ContinueWith(_ =>
             {
-                PageController.OpenPage(typeof(TrialPageViewModel));
+                OpenPage(typeof(TrialPageViewModel));
             });
         }
     }

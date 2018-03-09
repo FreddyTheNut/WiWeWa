@@ -1,16 +1,12 @@
 ﻿using SQLite;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
 using WiWeWa.Model;
 using WiWeWa.Model.Enum;
-using WiWeWa.ViewModel.Helper;
 
 namespace WiWeWa.ViewModel.ModelViewModel
 {
     [Table("Frage")]
-    public class FrageViewModel : NotifyPropertyChanged
+    public class FrageViewModel : ViewModelBase
     {
         private Frage frage = new Frage();
 

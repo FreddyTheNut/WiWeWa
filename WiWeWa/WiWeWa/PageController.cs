@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
 using WiWeWa.View;
+using WiWeWa.ViewModel;
 using WiWeWa.ViewModel.ViewViewModel;
 using Xamarin.Forms;
 
@@ -20,22 +21,43 @@ namespace WiWeWa
 
         public static void OpenPage(Type viewModel)
         {
-            if(viewModel != null)
+            Page page = null;
+
+            switch (viewModels[viewModel])
             {
-                 switch (viewModels[viewModel])
-                 {
-                     case 0:
-                         Device.BeginInvokeOnMainThread(() => App.Current.MainPage = new LoadingPage());
-                         break;
+                case 0:
+                    page = new LoadingPage();
+                    break;
 
-                     case 1:
-                         Device.BeginInvokeOnMainThread(() => App.Current.MainPage = new TrialPage());
-                         break;
+                case 1:
+                    page = new TrialPage();
+                    break;
 
-                     case 2:
-                         Device.BeginInvokeOnMainThread(() => App.Current.MainPage = new MainPage());
-                         break;
-                 }
+                case 2:
+                    page = new MainPage();
+                    break;
+            }
+
+            Device.BeginInvokeOnMainThread(() => App.Current.MainPage = page);
+        }
+
+        public static void OpenPage(Type viewModel, Type viewModelClose)
+        {
+            OpenPage(viewModel);
+
+            switch (viewModels[viewModelClose])
+            {
+                case 0:
+                    ViewModelLocator.ClearLoadingPageViewModel();
+                    break;
+
+                case 1:
+                    ViewModelLocator.ClearTrialPageViewModel();
+                    break;
+
+                case 2:
+                    ViewModelLocator.ClearMainPageViewModel();
+                    break;
             }
         }
     }
