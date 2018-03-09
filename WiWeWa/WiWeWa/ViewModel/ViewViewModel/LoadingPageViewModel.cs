@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using WiWeWa.ViewModel.ModelViewModel;
 using Xamarin.Forms;
 
@@ -15,23 +17,12 @@ namespace WiWeWa.ViewModel.ViewViewModel
 
         private void LoadData()
         {
-            List<PruefungViewModel> liste = new DatabaseViewModel().GetPruefungen();
-        }
+            DatabaseViewModel.LoadData();
 
-        private void Continue()
-        {
-            PageController.OpenPage(typeof(TrialPageViewModel));
-        }
-
-        public Command ButtonContinue_Clicked
-        {
-            get
+            Task.Delay(TimeSpan.FromSeconds(3)).ContinueWith(_ =>
             {
-                return new Command(() =>
-                {
-                    Continue();
-                });
-            }
+                PageController.OpenPage(typeof(TrialPageViewModel));
+            });
         }
     }
 }

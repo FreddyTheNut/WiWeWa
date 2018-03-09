@@ -7,7 +7,7 @@ using WiWeWa.ViewModel.Helper;
 
 namespace WiWeWa.ViewModel.ModelViewModel
 {
-    [Table("Pruefung")]
+    [Table("Antwort")]
     public class AntwortViewModel : NotifyPropertyChanged
     {
         private Antwort antwort = new Antwort();

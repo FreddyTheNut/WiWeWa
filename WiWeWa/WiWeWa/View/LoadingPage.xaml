@@ -9,10 +9,8 @@
             <Label Text="WiSo Weshalb Warum?" TextColor="White" AbsoluteLayout.LayoutBounds=".5,.2,-1,-1" AbsoluteLayout.LayoutFlags="PositionProportional"/>
 
             <Image Source="testImage.png" AbsoluteLayout.LayoutBounds=".5,.5,50,50" AbsoluteLayout.LayoutFlags="PositionProportional"/>
-
-            <Button Text="Continue" Command="{Binding ButtonContinue_Clicked}" AbsoluteLayout.LayoutBounds=".5,.8,.4,-1" AbsoluteLayout.LayoutFlags="PositionProportional,WidthProportional"/>
-            
-            <ActivityIndicator IsRunning="True" Color="White" AbsoluteLayout.LayoutBounds=".5,.9,1,-1" AbsoluteLayout.LayoutFlags="PositionProportional,WidthProportional"/>
+   
+            <ActivityIndicator IsRunning="True" Color="White" AbsoluteLayout.LayoutBounds=".5,.8,1,-1" AbsoluteLayout.LayoutFlags="PositionProportional,WidthProportional"/>
         </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>
