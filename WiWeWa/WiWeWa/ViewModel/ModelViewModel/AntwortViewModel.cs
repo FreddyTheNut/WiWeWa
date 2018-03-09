@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SQLite;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using WiWeWa.Model;
@@ -6,7 +7,8 @@ using WiWeWa.ViewModel.Helper;
 
 namespace WiWeWa.ViewModel.ModelViewModel
 {
-    class AntwortViewModel : NotifyPropertyChanged
+    [Table("Pruefung")]
+    public class AntwortViewModel : NotifyPropertyChanged
     {
         private Antwort antwort = new Antwort();
 
@@ -22,14 +24,14 @@ namespace WiWeWa.ViewModel.ModelViewModel
                 }
             }
         }
-        public int FrageNR
+        public int FrageNr
         {
-            get { return antwort.FrageNR; }
+            get { return antwort.FrageNr; }
             set
             {
-                if (FrageNR != value)
+                if (FrageNr != value)
                 {
-                    antwort.FrageNR = value;
+                    antwort.FrageNr = value;
                     OnPropertyChanged();
                 }
             }

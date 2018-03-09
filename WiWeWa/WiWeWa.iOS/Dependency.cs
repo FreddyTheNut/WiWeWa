@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Foundation;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -11,8 +12,29 @@ namespace WiWeWa.iOS
     {
         public string GetLocalFilePath(string file)
         {
-            var documentsPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
-            return Path.Combine(documentsPath, file);
+            string docFolder = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+            string libFolder = Path.Combine(docFolder, "..", "Library", "Databases");
+
+            if (!Directory.Exists(libFolder))
+            {
+                Directory.CreateDirectory(libFolder);
+            }
+
+            string dbPath = Path.Combine(libFolder, file);
+
+            CopyDatabaseIfNotExists(dbPath);
+
+            return dbPath;
+        }
+
+        private void CopyDatabaseIfNotExists(string dbPath)
+        {
+            if (!File.Exists(dbPath))
+            {
+                var existingDb = NSBundle.MainBundle.PathForResource("IHKWiso", "db");
+                File.Copy(existingDb, dbPath);
+            }
+
         }
     }
 }

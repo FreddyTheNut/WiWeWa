@@ -14,7 +14,7 @@ namespace WiWeWa.ViewModel.Helper
 
         protected void OnPropertyChanged([CallerMemberName] string callerName = "")
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(callerName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(callerName)) ;
         }
     }
 }

@@ -1,5 +1,7 @@
-﻿using System;
+﻿using SQLite;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using WiWeWa.Model;
 using WiWeWa.Model.Enum;
@@ -7,6 +9,7 @@ using WiWeWa.ViewModel.Helper;
 
 namespace WiWeWa.ViewModel.ModelViewModel
 {
+    [Table("Frage")]
     public class FrageViewModel : NotifyPropertyChanged
     {
         private Frage frage = new Frage();
@@ -23,14 +26,14 @@ namespace WiWeWa.ViewModel.ModelViewModel
                 }
             }
         }
-        public int PruefungNR
+        public int PruefungNr
         {
-            get { return frage.PruefungNR; }
+            get { return frage.PruefungNr; }
             set
             {
-                if (PruefungNR != value)
+                if (PruefungNr != value)
                 {
-                    frage.PruefungNR = value;
+                    frage.PruefungNr = value;
                     OnPropertyChanged();
                 }
             }
@@ -119,6 +122,6 @@ namespace WiWeWa.ViewModel.ModelViewModel
                 }
             }
         }
-        public List<Antwort> Antworten { get => frage.Antworten; set => frage.Antworten = value; }
+        public ObservableCollection<AntwortViewModel> Antworten { get; } = new ObservableCollection<AntwortViewModel>();
     }
 }

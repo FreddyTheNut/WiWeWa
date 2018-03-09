@@ -10,12 +10,10 @@ namespace WiWeWa.Model
         private int jahr;
         private string jahreszeit;
         private string situation;
-        private List<Frage> fragen = new List<Frage>();
 
         public int Id { get => id; set => id = value; }
         public int Jahr { get => jahr; set => jahr = value; }
         public string Jahreszeit { get => jahreszeit; set => jahreszeit = value; }
         public string Situation { get => situation; set => situation = value; }
-        public List<Frage> Fragen { get => fragen; set => fragen = value; }
     }
 }

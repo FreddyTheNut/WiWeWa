@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using WiWeWa.ViewModel.ModelViewModel;
 using Xamarin.Forms;
 
 namespace WiWeWa.ViewModel.ViewViewModel
@@ -14,7 +15,7 @@ namespace WiWeWa.ViewModel.ViewViewModel
 
         private void LoadData()
         {
-            DataViewModel.SetPruefungen(new DatabaseViewModel().GetAllPruefungen());
+            List<PruefungViewModel> liste = new DatabaseViewModel().GetPruefungen();
         }
 
         private void Continue()

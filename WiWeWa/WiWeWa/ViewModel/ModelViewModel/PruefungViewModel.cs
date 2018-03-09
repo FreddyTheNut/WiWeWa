@@ -1,11 +1,14 @@
-﻿using System;
+﻿using SQLite;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using WiWeWa.Model;
 using WiWeWa.ViewModel.Helper;
 
 namespace WiWeWa.ViewModel.ModelViewModel
 {
+    [Table ("Pruefung")]
     public class PruefungViewModel : NotifyPropertyChanged
     {
         private Pruefung pruefung = new Pruefung();
@@ -58,6 +61,6 @@ namespace WiWeWa.ViewModel.ModelViewModel
                 }
             }
         }
-        public List<Frage> Fragen { get => pruefung.Fragen; set => pruefung.Fragen = value; }
+        public ObservableCollection<FrageViewModel> Fragen { get; } = new ObservableCollection<FrageViewModel>();
     }
 }
