@@ -136,6 +136,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\testImage.png" />
+    <BundleResource Include="Resources\icon_high_res.png" />
   </ItemGroup>
 </Project>
