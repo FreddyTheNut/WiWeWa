@@ -19,7 +19,7 @@ namespace WiWeWa.ViewModel.ViewViewModel
         {
             DatabaseViewModel.LoadData();
 
-            Task.Delay(TimeSpan.FromSeconds(3)).ContinueWith(_ =>
+            Task.Delay(TimeSpan.FromSeconds(2)).ContinueWith(_ =>
             {
                 OpenPage(typeof(TrialPageViewModel));
             });

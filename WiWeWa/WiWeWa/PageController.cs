@@ -12,11 +12,17 @@ namespace WiWeWa
 {
     public sealed class PageController
     {
-        private static Dictionary<Type, int> viewModelsDic = new Dictionary<Type, int>()
+        enum Pages
         {
-            {typeof(LoadingPageViewModel), 0 },
-            {typeof(TrialPageViewModel), 1 },
-            {typeof(MainPageViewModel), 2 }
+            LoadingPage,
+            TrialPage,
+            MainPage
+        }
+        private static Dictionary<Type, Pages> viewModelsDic = new Dictionary<Type, Pages>()
+        {
+            {typeof(LoadingPageViewModel), Pages.LoadingPage },
+            {typeof(TrialPageViewModel), Pages.TrialPage },
+            {typeof(MainPageViewModel), Pages.MainPage }
         };
 
         public static void OpenPage(Type viewModel)
@@ -30,15 +36,15 @@ namespace WiWeWa
 
             switch (viewModelsDic[viewModelClose])
             {
-                case 0:
+                case Pages.LoadingPage:
                     ViewModelLocator.ClearLoadingPageViewModel();
                     break;
 
-                case 1:
+                case Pages.TrialPage:
                     ViewModelLocator.ClearTrialPageViewModel();
                     break;
 
-                case 2:
+                case Pages.MainPage:
                     ViewModelLocator.ClearMainPageViewModel();
                     break;
             }
@@ -50,7 +56,7 @@ namespace WiWeWa
 
             INavigation navigation = App.Current.MainPage.Navigation;
 
-            if (navigation.NavigationStack.Count < 0)
+            if (navigation.NavigationStack.Count > 0)
             {
                 Device.BeginInvokeOnMainThread(() => navigation.PushAsync(page));
             }            
@@ -67,13 +73,13 @@ namespace WiWeWa
         {
             switch (viewModelsDic[viewModel])
             {
-                case 0:
+                case Pages.LoadingPage:
                     return new LoadingPage();
 
-                case 1:
+                case Pages.TrialPage:
                     return new TrialPage();
 
-                case 2:
+                case Pages.MainPage:
                     return new MainPage();
             }
 
