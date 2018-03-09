@@ -1,15 +1,11 @@
 ﻿using SQLite;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
 using WiWeWa.Model;
-using WiWeWa.ViewModel.Helper;
 
 namespace WiWeWa.ViewModel.ModelViewModel
 {
     [Table ("Pruefung")]
-    public class PruefungViewModel : NotifyPropertyChanged
+    public class PruefungViewModel : ViewModelBase
     {
         private Pruefung pruefung = new Pruefung();
 

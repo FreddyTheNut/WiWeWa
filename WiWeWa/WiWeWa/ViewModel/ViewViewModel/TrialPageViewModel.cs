@@ -6,7 +6,7 @@ using WiWeWa.ViewModel.ModelViewModel;
 
 namespace WiWeWa.ViewModel.ViewViewModel
 {
-    public class TrialPageViewModel
+    public class TrialPageViewModel : ViewModelBase
     {
         ObservableCollection<PruefungViewModel> pruefungen = new ObservableCollection<PruefungViewModel>(DatabaseViewModel.Pruefungen);
     }

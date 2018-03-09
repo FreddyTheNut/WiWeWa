@@ -1,14 +1,10 @@
 ﻿using SQLite;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using WiWeWa.Model;
-using WiWeWa.ViewModel.Helper;
 
 namespace WiWeWa.ViewModel.ModelViewModel
 {
     [Table("Antwort")]
-    public class AntwortViewModel : NotifyPropertyChanged
+    public class AntwortViewModel : ViewModelBase
     {
         private Antwort antwort = new Antwort();
 
