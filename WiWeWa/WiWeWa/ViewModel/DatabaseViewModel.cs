@@ -29,8 +29,8 @@ namespace WiWeWa.ViewModel
         private static void SetPruefungen(List<PruefungViewModel> pruefungen)
         {
             Pruefungen.Clear();
-            pruefungen.ForEach(x => Pruefungen.Add(x));
-        }
+            Pruefungen.AddRange(pruefungen);
+         }
 
         private static List<PruefungViewModel> GetPruefungen()
         {
