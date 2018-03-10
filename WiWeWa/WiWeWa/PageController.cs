@@ -1,10 +1,7 @@
 ﻿using SMPHCracker.ViewModel;
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Text;
 using WiWeWa.View;
-using WiWeWa.ViewModel;
 using WiWeWa.ViewModel.ViewViewModel;
 using Xamarin.Forms;
 

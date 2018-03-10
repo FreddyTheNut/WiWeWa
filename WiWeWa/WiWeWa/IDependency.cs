@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace WiWeWa
+﻿namespace WiWeWa
 {
     public interface IDependency
     {
