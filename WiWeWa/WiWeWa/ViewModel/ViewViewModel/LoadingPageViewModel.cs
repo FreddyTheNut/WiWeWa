@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using WiWeWa.ViewModel.ModelViewModel;
-using Xamarin.Forms;
 
 namespace WiWeWa.ViewModel.ViewViewModel
 {

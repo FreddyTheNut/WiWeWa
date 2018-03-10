@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using WiWeWa.Model.Enum;
+﻿using WiWeWa.Model.Enum;
 
 namespace WiWeWa.Model
 {
