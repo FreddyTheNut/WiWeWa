@@ -3,29 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              BindingContext="{Binding TrialPage, Source={StaticResource ViewModelLocator}}"
              x:Class="WiWeWa.View.TrialPage"
-             BackgroundColor="{StaticResource BackgroundColor}" 
-             NavigationPage.HasNavigationBar="False">
+             BackgroundColor="{StaticResource BackgroundColor}">
     <ContentPage.Content>
-        <Grid RowSpacing="30">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="3*"/>
-            </Grid.RowDefinitions>
+        <AbsoluteLayout>
+            <Label Text="WiSo Weshalb Warum?" TextColor="White" FontSize="Large" FontAttributes="Bold" AbsoluteLayout.LayoutBounds=".5,.2,-1,-1" AbsoluteLayout.LayoutFlags="PositionProportional"/>
 
-            <Label Text="WiSo Weshalb Warum?" TextColor="White" FontSize="Large" FontAttributes="Bold" VerticalOptions="End" HorizontalOptions="Center" Grid.Row="0"/>
-
-            <Image Source="icon_high_res.png" VerticalOptions="Start" HorizontalOptions="Center" Grid.Row="1"/>
-
-            <ListView ItemsSource="{Binding Pruefungen}" VerticalOptions="End" HorizontalOptions="Fill" Grid.Row="2">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <Label Text="{Binding Bezeichnung}" TextColor="Teal" VerticalOptions="Center" HorizontalOptions="Center"/>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </Grid>
+            <Image Source="icon_high_res.png" AbsoluteLayout.LayoutBounds=".5,.5,175,175" AbsoluteLayout.LayoutFlags="PositionProportional"/>
+   
+            <ActivityIndicator IsRunning="True" Color="White" AbsoluteLayout.LayoutBounds=".5,.8,1,-1" AbsoluteLayout.LayoutFlags="PositionProportional,WidthProportional"/>
+        </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>

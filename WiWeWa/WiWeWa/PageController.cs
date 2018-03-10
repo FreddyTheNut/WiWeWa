@@ -20,7 +20,6 @@ namespace WiWeWa
         }
         private static Dictionary<Type, Pages> viewModelsDic = new Dictionary<Type, Pages>()
         {
-            {typeof(LoadingPageViewModel), Pages.LoadingPage },
             {typeof(TrialPageViewModel), Pages.TrialPage },
             {typeof(MainPageViewModel), Pages.MainPage }
         };
@@ -36,10 +35,6 @@ namespace WiWeWa
 
             switch (viewModelsDic[viewModelClose])
             {
-                case Pages.LoadingPage:
-                    ViewModelLocator.ClearLoadingPageViewModel();
-                    break;
-
                 case Pages.TrialPage:
                     ViewModelLocator.ClearTrialPageViewModel();
                     break;
@@ -73,9 +68,6 @@ namespace WiWeWa
         {
             switch (viewModelsDic[viewModel])
             {
-                case Pages.LoadingPage:
-                    return new LoadingPage();
-
                 case Pages.TrialPage:
                     return new TrialPage();
 

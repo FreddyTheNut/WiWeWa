@@ -13,7 +13,7 @@ namespace WiWeWa
 		{
 			InitializeComponent();
 
-            MainPage = new View.LoadingPage();
+            MainPage = new View.MainPage();
 		}
 
 		protected override void OnStart ()

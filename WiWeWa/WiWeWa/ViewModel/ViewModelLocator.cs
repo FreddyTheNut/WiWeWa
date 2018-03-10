@@ -35,36 +35,6 @@ namespace SMPHCracker.ViewModel
         }
         #endregion
 
-        #region LoadingPageViewModel
-        private static LoadingPageViewModel loadingPage;
-
-        public LoadingPageViewModel LoadingPage
-        {
-            get
-            {
-                return LoadingPageStatic;
-            }
-        }
-
-        public static LoadingPageViewModel LoadingPageStatic
-        {
-            get
-            {
-                if (loadingPage == null)
-                {
-                    loadingPage = new LoadingPageViewModel();
-                }
-
-                return loadingPage;
-            }
-        }
-
-        public static void ClearLoadingPageViewModel()
-        {
-            loadingPage = null;
-        }
-        #endregion
-
         #region TrialPageViewModel
         private static TrialPageViewModel trialPage;
 
