@@ -5,6 +5,7 @@ namespace WiWeWa.ViewModel.ViewViewModel
 {
     public class TrialPageViewModel : ViewModelBase
     {
-        ObservableCollection<PruefungViewModel> pruefungen = new ObservableCollection<PruefungViewModel>(DatabaseViewModel.Pruefungen);
+        public ObservableCollection<PruefungViewModel> Pruefungen { get; } = new ObservableCollection<PruefungViewModel>(DatabaseViewModel.Pruefungen);
+
     }
 }

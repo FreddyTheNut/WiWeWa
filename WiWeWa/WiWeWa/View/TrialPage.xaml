@@ -3,12 +3,29 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              BindingContext="{Binding TrialPage, Source={StaticResource ViewModelLocator}}"
              x:Class="WiWeWa.View.TrialPage"
-             BackgroundColor="{StaticResource BackgroundColor}">
+             BackgroundColor="{StaticResource BackgroundColor}" 
+             NavigationPage.HasNavigationBar="False">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!" TextColor="White"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+        <Grid RowSpacing="30">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="3*"/>
+            </Grid.RowDefinitions>
+
+            <Label Text="WiSo Weshalb Warum?" TextColor="White" FontSize="Large" FontAttributes="Bold" VerticalOptions="End" HorizontalOptions="Center" Grid.Row="0"/>
+
+            <Image Source="icon_high_res.png" VerticalOptions="Start" HorizontalOptions="Center" Grid.Row="1"/>
+
+            <ListView ItemsSource="{Binding Pruefungen}" VerticalOptions="End" HorizontalOptions="Fill" Grid.Row="2">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Label Text="{Binding Bezeichnung}" TextColor="Teal" VerticalOptions="Center" HorizontalOptions="Center"/>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

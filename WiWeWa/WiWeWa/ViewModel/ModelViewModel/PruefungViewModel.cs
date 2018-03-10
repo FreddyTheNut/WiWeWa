@@ -58,5 +58,13 @@ namespace WiWeWa.ViewModel.ModelViewModel
             }
         }
         public ObservableCollection<FrageViewModel> Fragen { get; } = new ObservableCollection<FrageViewModel>();
+
+        public string Bezeichnung
+        {
+            get
+            {
+                return $"Prüfung {Jahreszeit} {Jahr}";
+            }
+        }
     }
 }
