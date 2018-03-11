@@ -5,12 +5,28 @@
              x:Class="WiWeWa.View.TrialPage"
              BackgroundColor="{StaticResource BackgroundColor}">
     <ContentPage.Content>
-        <AbsoluteLayout>
-            <Label Text="WiSo Weshalb Warum?" TextColor="White" FontSize="Large" FontAttributes="Bold" AbsoluteLayout.LayoutBounds=".5,.2,-1,-1" AbsoluteLayout.LayoutFlags="PositionProportional"/>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="7*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
 
-            <Image Source="icon_high_res.png" AbsoluteLayout.LayoutBounds=".5,.5,175,175" AbsoluteLayout.LayoutFlags="PositionProportional"/>
-   
-            <ActivityIndicator IsRunning="True" Color="White" AbsoluteLayout.LayoutBounds=".5,.8,1,-1" AbsoluteLayout.LayoutFlags="PositionProportional,WidthProportional"/>
-        </AbsoluteLayout>
+            <Label x:Name="zusatzTextLabel" Text="{Binding Frage.ZusatzText}" TextColor="Teal" Grid.Row="0"/>
+            <Label x:Name="frageTextLabel" Text="{Binding Frage.FrageText}" TextColor="Teal" Grid.Row="1"/>
+
+            <ListView ItemsSource="{Binding Frage.Antworten}" VerticalOptions="End" HorizontalOptions="Fill" Grid.Row="2">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Label Text="{Binding AntwortText}" TextColor="Teal" VerticalOptions="Center" HorizontalOptions="Center"/>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <Button Text="Next" Command="{Binding Next_Command}" Grid.Row="3"/>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

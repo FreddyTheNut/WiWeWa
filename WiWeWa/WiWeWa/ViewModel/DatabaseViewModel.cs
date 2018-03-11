@@ -24,6 +24,11 @@ namespace WiWeWa.ViewModel
             SetPruefungen(pruefungen);
         }
 
+        public static List<FrageViewModel> GetSelectedFragen()
+        {
+            return Pruefungen.Where(x => x.IsSelected).SelectMany(x => x.Fragen).ToList();
+        }
+
         private static void SetPruefungen(List<PruefungViewModel> pruefungen)
         {
             Pruefungen.Clear();

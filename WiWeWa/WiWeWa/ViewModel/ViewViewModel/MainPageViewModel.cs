@@ -36,6 +36,8 @@ namespace WiWeWa.ViewModel.ViewViewModel
         private void ChoosePruefung()
         {
             //TODO - open Frage
+            SelectedPruefung.IsSelected = true;
+            NavigatePage(typeof(TrialPageViewModel));
         }
     }
 }

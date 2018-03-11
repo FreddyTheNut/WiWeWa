@@ -57,6 +57,18 @@ namespace WiWeWa.ViewModel.ModelViewModel
                 }
             }
         }
+        public bool IsSelected
+        {
+            get { return pruefung.IsSelected; }
+            set
+            {
+                if (IsSelected != value)
+                {
+                    pruefung.IsSelected = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
         public ObservableCollection<FrageViewModel> Fragen { get; } = new ObservableCollection<FrageViewModel>();
 
         public string Bezeichnung
