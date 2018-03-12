@@ -10,7 +10,8 @@ namespace WiWeWa.ViewModel.ViewViewModel
 {
     public class TrialPageViewModel : ViewModelBase
     {
-        public ObservableCollection<FrageViewModel> Fragen { get; } = new ObservableCollection<FrageViewModel>(DatabaseViewModel.GetSelectedFragen());
+        #region Variablen
+        public ObservableCollection<FrageViewModel> Fragen { get; private set; }
 
         private FrageViewModel frage;
         public FrageViewModel Frage
@@ -26,13 +27,13 @@ namespace WiWeWa.ViewModel.ViewViewModel
             }
         }
 
-        private bool aufloesung = true;
+        private bool aufloesung;
         public bool Aufloesung
         {
             get { return aufloesung; }
             set
             {
-                if(Aufloesung != value)
+                if (Aufloesung != value)
                 {
                     aufloesung = value;
                     OnPropertyChanged();
@@ -40,6 +41,36 @@ namespace WiWeWa.ViewModel.ViewViewModel
             }
         }
 
+        private bool isSolvable;
+        public bool IsSolvable
+        {
+            get { return isSolvable; }
+            set
+            {
+                if (IsSolvable != value)
+                {
+                    isSolvable = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private int canSelectCounter;
+        public int CanSelectCounter
+        {
+            get { return canSelectCounter; }
+            set
+            {
+                if (CanSelectCounter != value)
+                {
+                    canSelectCounter = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        #endregion
+
+        #region Commands
         public Command Next_Command
         {
             get
@@ -60,32 +91,54 @@ namespace WiWeWa.ViewModel.ViewViewModel
                 });
             }
         }
+        #endregion
 
+        #region Constructer
+        public TrialPageViewModel()
+        {
+            Fragen = new ObservableCollection<FrageViewModel>(DatabaseViewModel.GetSelectedFragen());
+
+            Aufloesung = true;
+            IsSolvable = false;
+
+            NextQuestion();
+        }
+        #endregion
+
+        #region Methods
         private void SelectAnswer(AntwortViewModel antwort)
         {
-            if(antwort != null)
+            if (antwort != null)
             {
                 if (antwort.Status == AntwortStatus.NotSelected)
                     antwort.Status = AntwortStatus.Selected;
                 else
                     antwort.Status = AntwortStatus.NotSelected;
+
+                SetIsSolveabel();
+                SetCanSelectCounter();
             }
         }
 
-        public TrialPageViewModel()
+        private void SetIsSolveabel()
         {
-            NextQuestion();
+            IsSolvable = Frage.Antworten.Where(x => x.Status == AntwortStatus.Selected).ToList().Count() == Frage.RichtigeAnzahl;
+        }
+
+        private void SetCanSelectCounter()
+        {
+            CanSelectCounter = Frage.RichtigeAnzahl - Frage.Antworten.Where(x => x.Status == AntwortStatus.Selected).Count();
         }
 
         private void NextQuestion()
         {
-            if(Frage != null)
+            if (Frage != null)
             {
                 if (Aufloesung)
                 {
-                    List<AntwortViewModel> selectedAntworten = Frage.Antworten.Where(x => x.Status == AntwortStatus.Selected).ToList(); ;
+                    List<AntwortViewModel> selectedAntworten = Frage.Antworten.Where(x => x.Status == AntwortStatus.Selected).ToList();
 
-                    if (selectedAntworten.Any())
+                    if (selectedAntworten.Count() == Frage.RichtigeAnzahl)
                     {
                         selectedAntworten.ForEach(x => { if (x.Richtig) x.Status = AntwortStatus.Right; else x.Status = AntwortStatus.Wrong; });
 
@@ -106,13 +159,19 @@ namespace WiWeWa.ViewModel.ViewViewModel
                     Frage = zubearbeitendeFragen[new Random().Next(0, zubearbeitendeFragen.Count)];
 
                     Aufloesung = true;
+
+                    SetIsSolveabel();
+                    SetCanSelectCounter();
                 }
             }
             else
             {
                 Frage = Fragen[new Random().Next(0, Fragen.Count)];
+
+                SetIsSolveabel();
+                SetCanSelectCounter();
             }
         }
-
+        #endregion
     }
 }
