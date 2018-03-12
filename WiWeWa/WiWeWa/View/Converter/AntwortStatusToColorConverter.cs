@@ -19,7 +19,7 @@ namespace WiWeWa.View.Converter
                 switch (status)
                 {
                     case AntwortStatus.NotSelected:
-                        return Color.Transparent;
+                        return Color.White;
 
                     case AntwortStatus.Selected:
                         return Color.Teal;
@@ -31,11 +31,11 @@ namespace WiWeWa.View.Converter
                         return Color.Red;
 
                     default:
-                        return Color.Transparent;
+                        return Color.White;
                 }
             }
 
-            return Color.Transparent;
+            return Color.White;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

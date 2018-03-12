@@ -108,15 +108,18 @@ namespace WiWeWa.ViewModel.ViewViewModel
         #region Methods
         private void SelectAnswer(AntwortViewModel antwort)
         {
-            if (antwort != null)
+            if (Aufloesung)
             {
-                if (antwort.Status == AntwortStatus.NotSelected)
-                    antwort.Status = AntwortStatus.Selected;
-                else
-                    antwort.Status = AntwortStatus.NotSelected;
+                if (antwort != null)
+                {
+                    if (antwort.Status == AntwortStatus.NotSelected)
+                        antwort.Status = AntwortStatus.Selected;
+                    else
+                        antwort.Status = AntwortStatus.NotSelected;
 
-                SetIsSolveabel();
-                SetCanSelectCounter();
+                    SetIsSolveabel();
+                    SetCanSelectCounter();
+                }
             }
         }
 
@@ -149,6 +152,8 @@ namespace WiWeWa.ViewModel.ViewViewModel
                             Frage.Status = FrageStatus.Falsch;
 
                         Aufloesung = false;
+
+                        Frage.Antworten.Where(x => x.Richtig).ToList().ForEach(x => x.Status = AntwortStatus.Right);
                     }
                 }
                 else
