@@ -4,11 +4,11 @@ using System.Text;
 
 namespace WiWeWa.Model.Enum
 {
-    public enum FrageStatus
+    public enum AntwortStatus
     {
-        Unbearbeitet,
-        Bearbeitet,
-        Richtig,
-        Falsch
+        NotSelected,
+        Selected,
+        Right,
+        Wrong
     }
 }

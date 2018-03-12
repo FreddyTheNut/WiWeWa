@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DLToolkit.Forms.Controls;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,7 @@ namespace WiWeWa
 		public App ()
 		{
 			InitializeComponent();
+            FlowListView.Init();
 
             MainPage = new View.MainPage();
 		}

@@ -1,5 +1,6 @@
 ﻿using SQLite;
 using WiWeWa.Model;
+using WiWeWa.Model.Enum;
 
 namespace WiWeWa.ViewModel.ModelViewModel
 {
@@ -52,6 +53,18 @@ namespace WiWeWa.ViewModel.ModelViewModel
                 if (Richtig != value)
                 {
                     antwort.Richtig = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public AntwortStatus Status
+        {
+            get { return antwort.Status; }
+            set
+            {
+                if (Status != value)
+                {
+                    antwort.Status = value;
                     OnPropertyChanged();
                 }
             }

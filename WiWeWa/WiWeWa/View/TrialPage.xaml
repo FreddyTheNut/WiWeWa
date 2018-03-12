@@ -3,12 +3,22 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              BindingContext="{Binding TrialPage, Source={StaticResource ViewModelLocator}}"
              x:Class="WiWeWa.View.TrialPage"
+             x:Name="TrialPage"
+             xmlns:flv="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView"
+             xmlns:converter="clr-namespace:WiWeWa.View.Converter"
              BackgroundColor="{StaticResource BackgroundColor}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converter:AntwortStatusToColorConverter x:Key="AntwortStatusToColorConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
     <ContentPage.Content>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="2*"/>
                 <RowDefinition Height="2*"/>
+                <RowDefinition Height="1*"/>
                 <RowDefinition Height="7*"/>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
@@ -16,17 +26,17 @@
             <Label x:Name="zusatzTextLabel" Text="{Binding Frage.ZusatzText}" TextColor="Teal" Grid.Row="0"/>
             <Label x:Name="frageTextLabel" Text="{Binding Frage.FrageText}" TextColor="Teal" Grid.Row="1"/>
 
-            <ListView ItemsSource="{Binding Frage.Antworten}" VerticalOptions="End" HorizontalOptions="Fill" Grid.Row="2">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <Label Text="{Binding AntwortText}" TextColor="Teal" VerticalOptions="Center" HorizontalOptions="Center"/>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+            <Label x:Name="antwortMoeglichkeitenLabel" Text="{Binding Frage.RichtigeAnzahl, StringFormat='Wähle {0}'}" TextColor="White" FontAttributes="Bold" Grid.Row="2"/>
 
-            <Button Text="Next" Command="{Binding Next_Command}" Grid.Row="3"/>
+            <flv:FlowListView FlowItemsSource="{Binding Frage.Antworten}" HasUnevenRows="True" FlowColumnCount="1" VerticalOptions="End" HorizontalOptions="Fill" Grid.Row="3" IsEnabled="{Binding Aufloesung}">
+                <flv:FlowListView.FlowColumnTemplate>
+                    <DataTemplate>
+                        <Button Text="{Binding AntwortText}" TextColor="White" BackgroundColor="{Binding Status, Converter={StaticResource AntwortStatusToColorConverter}}" BorderColor="Transparent" Command="{Binding Source={x:Reference TrialPage}, Path=BindingContext.SelectAnswer_Command}" CommandParameter="{Binding .}" VerticalOptions="Fill" HorizontalOptions="Fill"/>
+                    </DataTemplate>
+                </flv:FlowListView.FlowColumnTemplate>
+            </flv:FlowListView>
+
+            <Button Text="Next" Command="{Binding Next_Command}" Grid.Row="4"/>
         </Grid>
     </ContentPage.Content>
 </ContentPage>
