@@ -65,6 +65,34 @@ namespace SMPHCracker.ViewModel
         }
         #endregion
 
+        #region MainPageViewModel
+        private static ProgressViewModel progressView;
 
+        public ProgressViewModel ProgressView
+        {
+            get
+            {
+                return ProgressViewStatic;
+            }
+        }
+
+        public static ProgressViewModel ProgressViewStatic
+        {
+            get
+            {
+                if (progressView == null)
+                {
+                    progressView = new ProgressViewModel();
+                }
+
+                return progressView;
+            }
+        }
+
+        public static void ClearProgressViewStatic()
+        {
+            progressView = null;
+        }
+        #endregion
     }
 }
