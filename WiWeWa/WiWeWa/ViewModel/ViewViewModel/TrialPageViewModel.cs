@@ -46,7 +46,7 @@ namespace WiWeWa.ViewModel.ViewViewModel
             {
                 return new Command(_ =>
                 {
-                    RandomQuestion();
+                    NextQuestion();
                 });
             }
         }
@@ -74,10 +74,10 @@ namespace WiWeWa.ViewModel.ViewViewModel
 
         public TrialPageViewModel()
         {
-            RandomQuestion();
+            NextQuestion();
         }
 
-        private void RandomQuestion()
+        private void NextQuestion()
         {
             if(Frage != null)
             {
@@ -113,5 +113,6 @@ namespace WiWeWa.ViewModel.ViewViewModel
                 Frage = Fragen[new Random().Next(0, Fragen.Count)];
             }
         }
+
     }
 }

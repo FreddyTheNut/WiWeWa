@@ -64,5 +64,7 @@ namespace SMPHCracker.ViewModel
             trialPage = null;
         }
         #endregion
+
+
     }
 }
