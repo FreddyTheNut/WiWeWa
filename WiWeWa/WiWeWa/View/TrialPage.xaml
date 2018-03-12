@@ -25,8 +25,8 @@
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
 
-            <Label x:Name="zusatzTextLabel" Text="{Binding Frage.ZusatzText}" TextColor="Teal" Grid.Row="0"/>
-            <Label x:Name="frageTextLabel" Text="{Binding Frage.FrageText}" TextColor="Teal" Grid.Row="1"/>
+            <Label x:Name="zusatzTextLabel" Text="{Binding Frage.ZusatzText}" TextColor="Teal" FontAttributes="Bold"  FontSize="Medium" Grid.Row="0"/>
+            <Label x:Name="frageTextLabel" Text="{Binding Frage.FrageText}" TextColor="Teal" FontAttributes="Bold"  FontSize="Medium" Grid.Row="1"/>
 
             <Label x:Name="antwortMoeglichkeitenLabel" Text="{Binding Frage.RichtigeAnzahl, StringFormat='Wähle {0}'}" TextColor="White" FontAttributes="Bold" Grid.Row="2"/>
 

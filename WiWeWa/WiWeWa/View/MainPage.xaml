@@ -22,7 +22,7 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <Label Text="{Binding Bezeichnung}" TextColor="Teal" VerticalOptions="Center" HorizontalOptions="Center"/>
+                            <Label Text="{Binding Bezeichnung}" TextColor="Teal" FontAttributes="Bold"  FontSize="Medium" VerticalOptions="Center" HorizontalOptions="Center"/>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
