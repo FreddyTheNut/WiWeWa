@@ -7,7 +7,8 @@
              xmlns:flv="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView"
              xmlns:converter="clr-namespace:WiWeWa.View.Converter"
              xmlns:views="clr-namespace:WiWeWa.View"
-             BackgroundColor="{StaticResource BackgroundColor}">
+             BackgroundColor="{StaticResource BackgroundColor}"
+             NavigationPage.HasNavigationBar="False">
     <ContentPage.Resources>
         <ResourceDictionary>
             <converter:AntwortStatusToColorConverter x:Key="AntwortStatusToColorConverter"/>
@@ -17,20 +18,23 @@
     <ContentPage.Content>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="2*"/>
-                <RowDefinition Height="2*"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="7*"/>
-                <RowDefinition Height="1*"/>
+                <RowDefinition Height="50"/>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
+            
+            <Frame Grid.Row="0" BackgroundColor="White" Margin="5" CornerRadius="10">
+                <StackLayout Spacing="5" VerticalOptions="Center" HorizontalOptions="Center">
+                    <Label x:Name="zusatzTextLabel" Text="{Binding Frage.ZusatzText}" TextColor="Teal" FontAttributes="Bold"  FontSize="Medium"/>
+                    <Label x:Name="frageTextLabel" Text="{Binding Frage.FrageText}" TextColor="Teal" FontAttributes="Bold"  FontSize="Medium"/>
+                </StackLayout>
+            </Frame>
+            
+            <Label x:Name="antwortMoeglichkeitenLabel" Text="{Binding CanSelectCounter, StringFormat='Wähle {0}'}" TextColor="White" FontAttributes="Bold" Grid.Row="1"/>
 
-            <Label x:Name="zusatzTextLabel" Text="{Binding Frage.ZusatzText}" TextColor="Teal" FontAttributes="Bold"  FontSize="Medium" Grid.Row="0"/>
-            <Label x:Name="frageTextLabel" Text="{Binding Frage.FrageText}" TextColor="Teal" FontAttributes="Bold"  FontSize="Medium" Grid.Row="1"/>
-
-            <Label x:Name="antwortMoeglichkeitenLabel" Text="{Binding CanSelectCounter, StringFormat='Wähle {0}'}" TextColor="White" FontAttributes="Bold" Grid.Row="2"/>
-
-            <flv:FlowListView FlowItemsSource="{Binding Frage.Antworten}" HasUnevenRows="True" FlowColumnCount="1" VerticalOptions="End" HorizontalOptions="Fill" Grid.Row="3" IsEnabled="{Binding Aufloesung}">
+            <flv:FlowListView FlowItemsSource="{Binding Frage.Antworten}" HasUnevenRows="True" FlowColumnCount="1" VerticalOptions="End" HorizontalOptions="Fill" Grid.Row="2" IsEnabled="{Binding Aufloesung}">
                 <flv:FlowListView.FlowColumnTemplate>
                     <DataTemplate>
                         <Button Text="{Binding AntwortText}" TextColor="White" BackgroundColor="{Binding Status, Converter={StaticResource AntwortStatusToColorConverter}}" BorderColor="Transparent" Command="{Binding Source={x:Reference TrialPage}, Path=BindingContext.SelectAnswer_Command}" CommandParameter="{Binding .}" VerticalOptions="Fill" HorizontalOptions="Fill"/>
@@ -38,9 +42,9 @@
                 </flv:FlowListView.FlowColumnTemplate>
             </flv:FlowListView>
 
-            <Button x:Name="nextButton" Text="Next" IsEnabled="{Binding IsSolvable}" Command="{Binding Next_Command}" Grid.Row="4"/>
+            <Button x:Name="nextButton" Text="Next" IsEnabled="{Binding IsSolvable}" Command="{Binding Next_Command}" Grid.Row="3"/>
 
-            <views:ProgressView Grid.Row="5"/>
+            <views:ProgressView Grid.Row="4"/>
         </Grid>
     </ContentPage.Content>
 </ContentPage>
