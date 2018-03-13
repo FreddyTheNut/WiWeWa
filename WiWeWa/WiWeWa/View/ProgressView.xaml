@@ -1,14 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converter="clr-namespace:WiWeWa.View.Converter"
+             BindingContext="{Binding ProgressView, Source={StaticResource ViewModelLocator}}"
              x:Class="WiWeWa.View.ProgressView">
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <converter:IntToGridLengthConverter x:Key="IntToGridLengthConverter"/>
+        </ResourceDictionary>
+    </ContentView.Resources>
+    
     <ContentView.Content>
         <Grid ColumnSpacing="0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="10*"/>
-                <ColumnDefinition Width="5*"/>
-                <ColumnDefinition Width="14*"/>
-                <ColumnDefinition Width="8*"/>
+                <ColumnDefinition Width="{Binding RichtigCount, Converter={StaticResource IntToGridLengthConverter}}"/>
+                <ColumnDefinition Width="{Binding BearbeitetCount, Converter={StaticResource IntToGridLengthConverter}}"/>
+                <ColumnDefinition Width="{Binding FalschCount, Converter={StaticResource IntToGridLengthConverter}}"/>
+                <ColumnDefinition Width="{Binding UnbearbeitetCount, Converter={StaticResource IntToGridLengthConverter}}"/>
             </Grid.ColumnDefinitions>
 
             <Label BackgroundColor="Green" VerticalOptions="Fill" HorizontalOptions="Fill" Grid.Column="0"/>
