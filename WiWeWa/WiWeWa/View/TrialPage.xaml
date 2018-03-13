@@ -9,6 +9,7 @@
              xmlns:views="clr-namespace:WiWeWa.View"
              BackgroundColor="{StaticResource BackgroundColor}"
              NavigationPage.HasNavigationBar="False">
+    
     <ContentPage.Resources>
         <ResourceDictionary>
             <converter:AntwortStatusToColorConverter x:Key="AntwortStatusToColorConverter"/>

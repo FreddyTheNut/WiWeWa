@@ -35,6 +35,7 @@ namespace SMPHCracker.ViewModel
         }
         #endregion
 
+        //Temporary not static!
         #region TrialPageViewModel
         private static TrialPageViewModel trialPage;
 
@@ -42,7 +43,7 @@ namespace SMPHCracker.ViewModel
         {
             get
             {
-                return TrialPageStatic;
+                return new TrialPageViewModel();
             }
         }
 
@@ -65,14 +66,15 @@ namespace SMPHCracker.ViewModel
         }
         #endregion
 
-        #region MainPageViewModel
+        //Temporary not static!
+        #region ProgressViewModel
         private static ProgressViewModel progressView;
 
         public ProgressViewModel ProgressView
         {
             get
             {
-                return ProgressViewStatic;
+                return new ProgressViewModel();
             }
         }
 

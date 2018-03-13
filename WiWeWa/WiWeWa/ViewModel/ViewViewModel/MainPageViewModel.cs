@@ -11,19 +11,24 @@ namespace WiWeWa.ViewModel.ViewViewModel
     {
         public ObservableCollection<PruefungViewModel> Pruefungen { get; }
 
-        private PruefungViewModel selectedPruefung;
-        public PruefungViewModel SelectedPruefung
+        public Command SelectPruefung_Command
         {
-            get { return selectedPruefung; }
-            set
+            get
             {
-                if (SelectedPruefung != value)
+                return new Command<PruefungViewModel>(pruefung =>
                 {
-                    selectedPruefung = value;
-                    OnPropertyChanged();
-
-                    ChoosePruefung();
-                }
+                    SelectPruefung(pruefung);
+                });
+            }
+        }
+        public Command Start_Command
+        {
+            get
+            {
+                return new Command(_ =>
+                {
+                    Start();
+                });
             }
         }
 
@@ -33,10 +38,16 @@ namespace WiWeWa.ViewModel.ViewViewModel
             Pruefungen = new ObservableCollection<PruefungViewModel>(DatabaseViewModel.Pruefungen);
         }
 
-        private void ChoosePruefung()
+        private void SelectPruefung(PruefungViewModel pruefung)
         {
-            //TODO - open Frage
-            SelectedPruefung.IsSelected = true;
+            if(!pruefung.IsSelected)
+                pruefung.IsSelected = true;
+            else
+                pruefung.IsSelected = false;
+        }
+
+        private void Start()
+        {
             NavigatePage(typeof(TrialPageViewModel));
         }
     }

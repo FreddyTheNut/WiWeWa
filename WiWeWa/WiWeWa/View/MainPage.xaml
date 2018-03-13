@@ -1,32 +1,47 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:flv="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView"
+             xmlns:converter="clr-namespace:WiWeWa.View.Converter"
              BindingContext="{Binding MainPage, Source={StaticResource ViewModelLocator}}"
+             x:Name="MainPage"
              x:Class="WiWeWa.View.MainPage"
              BackgroundColor="{StaticResource BackgroundColor}"
              NavigationPage.HasNavigationBar="False">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converter:BoolToSelectedColorConverter x:Key="BoolToSelectedColorConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
     <ContentPage.Content>
         <Grid RowSpacing="30">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
-                <RowDefinition Height="3*"/>
+                <RowDefinition Height="4*"/>
+                <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
 
             <Label Text="WiSo Weshalb Warum?" TextColor="White" FontSize="Large" FontAttributes="Bold" VerticalOptions="End" HorizontalOptions="Center" Grid.Row="0"/>
 
             <Image Source="icon_high_res.png" VerticalOptions="Start" HorizontalOptions="Center" Grid.Row="1"/>
 
-            <ListView ItemsSource="{Binding Pruefungen}" SelectedItem="{Binding SelectedPruefung}" VerticalOptions="End" HorizontalOptions="Fill" Grid.Row="2">
-                <ListView.ItemTemplate>
+            <flv:FlowListView FlowItemsSource="{Binding Pruefungen}" HasUnevenRows="True" FlowColumnCount="1" VerticalOptions="End" HorizontalOptions="Fill" Grid.Row="2">
+                <flv:FlowListView.FlowColumnTemplate>
                     <DataTemplate>
-                        <ViewCell>
-                            <Label Text="{Binding Bezeichnung}" TextColor="Teal" FontAttributes="Bold"  FontSize="Medium" VerticalOptions="Center" HorizontalOptions="Center"/>
-                        </ViewCell>
+                        <Frame BackgroundColor="{Binding IsSelected, Converter={StaticResource BoolToSelectedColorConverter}}" Margin="20,5" VerticalOptions="Fill" HorizontalOptions="Fill">
+                            <Label Text="{Binding Bezeichnung}" TextColor="Black" FontSize="Medium" VerticalOptions="Center" HorizontalOptions="Center"/>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Source={x:Reference MainPage}, Path=BindingContext.SelectPruefung_Command}" CommandParameter="{Binding .}"/>
+                            </Frame.GestureRecognizers>
+                        </Frame>
                     </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                </flv:FlowListView.FlowColumnTemplate>
+            </flv:FlowListView>
+
+            <Button Text="Start" Command="{Binding Start_Command}" Grid.Row="3"/>
         </Grid>
     </ContentPage.Content>
 
