@@ -15,7 +15,7 @@ namespace WiWeWa
 			InitializeComponent();
             FlowListView.Init();
 
-            MainPage = new View.MainPage();
+            MainPage = new NavigationPage(new View.MainPage());
 		}
 
 		protected override void OnStart ()

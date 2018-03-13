@@ -48,6 +48,7 @@ namespace WiWeWa
 
             INavigation navigation = App.Current.MainPage.Navigation;
 
+            //TODO - Fix for UWP | UWP -> NavigationStack 1 on Page, Android -> NavigationStack 0 on Page
             if (navigation.NavigationStack.Count > 0)
             {
                 Device.BeginInvokeOnMainThread(() => navigation.PushAsync(page));
