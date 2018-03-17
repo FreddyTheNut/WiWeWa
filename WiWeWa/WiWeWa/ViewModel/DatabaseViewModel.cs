@@ -1,53 +1,91 @@
 ﻿using SQLite;
 using System.Collections.Generic;
 using System.Linq;
+using WiWeWa.Model.Enum;
 using WiWeWa.ViewModel.ModelViewModel;
 using Xamarin.Forms;
 
 namespace WiWeWa.ViewModel
 {
-    public sealed class DatabaseViewModel
+    public class DatabaseViewModel
     {
-        public static List<PruefungViewModel> Pruefungen { get; } = new List<PruefungViewModel>();
-
-        private static readonly SQLiteConnection database = new SQLiteConnection(DependencyService.Get<IDependency>().GetLocalFilePath("IHKWiso.db"));
-
-        public static void LoadData()
+        private static DatabaseViewModel instance;
+        public static DatabaseViewModel Instance
         {
-            List<PruefungViewModel> pruefungen = GetPruefungen();
-            List<FrageViewModel> fragen = GetFragen();
-            List<AntwortViewModel> antworten = GetAntworten();
+            get
+            {
+                if(instance == null)
+                {
+                    instance = new DatabaseViewModel();
+                }
 
-            pruefungen.ForEach(p => fragen.FindAll(f => p.Id == f.PruefungNr).ForEach(f => p.Fragen.Add(f)));
-            pruefungen.ForEach(p => p.Fragen.ToList().ForEach(f => antworten.FindAll(a => f.Id == a.FrageNr).ForEach(a => f.Antworten.Add(a))));
-
-            SetPruefungen(pruefungen);
+                return instance;
+            }
         }
 
-        public static List<FrageViewModel> GetSelectedFragen()
+        private readonly SQLiteConnection wisoDatabase = new SQLiteConnection(DependencyService.Get<IDependency>().GetWisoDataBasePath());
+        private readonly SQLiteConnection saveDatabase = new SQLiteConnection(DependencyService.Get<IDependency>().GetSaveDatabasePath());
+
+        public List<PruefungViewModel> Pruefungen { get; } = new List<PruefungViewModel>();
+
+
+        public DatabaseViewModel()
+        {
+            LoadData();
+            LoadAllFrageStatus();
+
+            Pruefungen.SelectMany(x => x.Fragen).ToList().ForEach(x => x.PropertyChanged += Frage_PropertyChanged);
+        }
+
+
+        public List<FrageViewModel> GetSelectedFragen()
         {
             return Pruefungen.Where(x => x.IsSelected).SelectMany(x => x.Fragen).ToList();
         }
 
-        private static void SetPruefungen(List<PruefungViewModel> pruefungen)
+        private void LoadData()
         {
-            Pruefungen.Clear();
+            List<PruefungViewModel> pruefungen = wisoDatabase.Table<PruefungViewModel>().ToList();
+            List<FrageViewModel> fragen = wisoDatabase.Table<FrageViewModel>().ToList();
+            List<AntwortViewModel> antworten = wisoDatabase.Table<AntwortViewModel>().ToList();
+
+            pruefungen.ForEach(p => fragen.FindAll(f => p.Id == f.PruefungNr).ForEach(f => p.Fragen.Add(f)));
+            pruefungen.ForEach(p => p.Fragen.ToList().ForEach(f => antworten.FindAll(a => f.Id == a.FrageNr).ForEach(a => f.Antworten.Add(a))));
+
+            if (Pruefungen.Any())
+                Pruefungen.Clear();
+
             Pruefungen.AddRange(pruefungen);
-         }
-
-        private static List<PruefungViewModel> GetPruefungen()
-        {
-            return new List<PruefungViewModel>(database.Table<PruefungViewModel>());
         }
 
-        private static List<FrageViewModel> GetFragen()
+        private void SaveFrageStatus(FrageViewModel frage)
         {
-            return new List<FrageViewModel>(database.Table<FrageViewModel>());
+            saveDatabase.InsertOrReplace(new SaveDataViewModel { Id = frage.Id, Status = frage.Status });
         }
 
-        private static List<AntwortViewModel> GetAntworten()
+        private void LoadAllFrageStatus()
         {
-            return new List<AntwortViewModel>(database.Table<AntwortViewModel>());
+            saveDatabase.CreateTable<SaveDataViewModel>();
+
+            List<SaveDataViewModel> saveData = saveDatabase.Table<SaveDataViewModel>().ToList();
+
+            foreach( SaveDataViewModel save in saveData)
+            {
+                Pruefungen.SelectMany(x => x.Fragen).ToList().FirstOrDefault(x => x.Id == save.Id).Status = save.Status;
+            }
+        }
+
+        public void ResetData()
+        {
+            saveDatabase.DeleteAll<SaveDataViewModel>();
+            Pruefungen.SelectMany(x => x.Fragen).Where(x => x.Status != FrageStatus.Unbearbeitet).ToList().ForEach(x => x.Status = FrageStatus.Unbearbeitet);
+        }
+
+
+        private void Frage_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName.Equals("Status"))
+                SaveFrageStatus((FrageViewModel)sender);
         }
     }
 }

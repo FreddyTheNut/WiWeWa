@@ -96,7 +96,7 @@ namespace WiWeWa.ViewModel.ViewViewModel
         #region Constructer
         public TrialPageViewModel()
         {
-            Fragen = new ObservableCollection<FrageViewModel>(DatabaseViewModel.GetSelectedFragen());
+            Fragen = new ObservableCollection<FrageViewModel>(DatabaseViewModel.Instance.GetSelectedFragen());
 
             Aufloesung = true;
             IsSolvable = false;

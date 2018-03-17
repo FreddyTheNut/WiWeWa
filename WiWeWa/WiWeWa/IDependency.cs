@@ -2,6 +2,7 @@
 {
     public interface IDependency
     {
-        string GetLocalFilePath(string file);
+        string GetWisoDataBasePath();
+        string GetSaveDatabasePath();
     }
 }

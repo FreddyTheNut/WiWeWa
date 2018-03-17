@@ -7,8 +7,20 @@
              xmlns:flv="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView"
              xmlns:converter="clr-namespace:WiWeWa.View.Converter"
              xmlns:views="clr-namespace:WiWeWa.View"
-             BackgroundColor="{StaticResource BackgroundColor}"
-             NavigationPage.HasNavigationBar="False">
+             BackgroundColor="{StaticResource BackgroundColor}">
+
+    <NavigationPage.HasNavigationBar>
+        <OnPlatform x:TypeArguments="x:Boolean"
+                    Android="False"
+                    iOS="True"
+                    WinPhone="False"/>
+    </NavigationPage.HasNavigationBar>
+    <NavigationPage.HasBackButton>
+        <OnPlatform x:TypeArguments="x:Boolean"
+                    Android="False"
+                    iOS="True"
+                    WinPhone="True"/>
+    </NavigationPage.HasBackButton>
     
     <ContentPage.Resources>
         <ResourceDictionary>

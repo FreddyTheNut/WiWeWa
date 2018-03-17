@@ -7,7 +7,7 @@
              x:Name="MainPage"
              x:Class="WiWeWa.View.MainPage"
              BackgroundColor="{StaticResource BackgroundColor}"
-             NavigationPage.HasNavigationBar="False">
+             NavigationPage.HasNavigationBar="True">
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -15,6 +15,10 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Name="Reset" Command="{Binding Reset_Command}"/>
+    </ContentPage.ToolbarItems>
+    
     <ContentPage.Content>
         <Grid RowSpacing="30">
             <Grid.RowDefinitions>
@@ -41,7 +45,7 @@
                 </flv:FlowListView.FlowColumnTemplate>
             </flv:FlowListView>
 
-            <Button Text="Start" Command="{Binding Start_Command}" Grid.Row="3"/>
+            <Button Text="Start" BackgroundColor="White" TextColor="Black" Command="{Binding Start_Command}" Grid.Row="3"/>
         </Grid>
     </ContentPage.Content>
 

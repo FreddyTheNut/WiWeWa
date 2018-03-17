@@ -8,32 +8,39 @@ using System.Threading.Tasks;
 using Windows.Storage;
 using WiWeWa.UWP;
 
+
 [assembly: Xamarin.Forms.Dependency(typeof(Dependency))]
 namespace WiWeWa.UWP
 {
     class Dependency : IDependency
     {
-        public string GetLocalFilePath(string file)
+        private string wisoDbPath = Path.Combine(Windows.Storage.ApplicationData.Current.LocalFolder.Path, "IHKWiso.db");
+        private string saveDbPath = Path.Combine(Windows.Storage.ApplicationData.Current.LocalFolder.Path, "SaveData.db");
+
+        public string GetWisoDataBasePath()
         {
-            string path = Windows.Storage.ApplicationData.Current.LocalFolder.Path;
-            string dbPath = Path.Combine(path, file);
+            if (!UpdateDatabase())
+                CopyDatabaseIfNotExists();
 
-            CopyDatabaseIfNotExistsAsync(dbPath);
-
-            return dbPath;
+            return wisoDbPath;
         }
 
-        private void CopyDatabaseIfNotExistsAsync(string dbPath)
+        public string GetSaveDatabasePath()
+        {
+            return saveDbPath;
+        }
+
+        private void CopyDatabaseIfNotExists()
         {
             var storageFile = IsolatedStorageFile.GetUserStoreForApplication();
 
-            if (!storageFile.FileExists(dbPath))
+            if (!storageFile.FileExists(wisoDbPath) || !(new FileInfo(wisoDbPath).Length > 0))
             {
                 var assembly = this.GetType().Assembly;
 
                 using (var resourceStream = assembly.GetManifestResourceStream("WiWeWa.UWP.IHKWiso.db"))
                 {
-                    using (var fileStream = storageFile.CreateFile(dbPath))
+                    using (var fileStream = storageFile.CreateFile(wisoDbPath))
                     {
                         byte[] readBuffer = new byte[4096];
                         int bytes = -1;
@@ -45,7 +52,30 @@ namespace WiWeWa.UWP
                     }
                 }
             }
+        }
 
+        private bool UpdateDatabase()
+        {
+            string sourceFile = Windows.Storage.UserDataPaths.GetDefault().Downloads;
+
+            if (File.Exists(sourceFile))
+            {
+                try
+                {
+                    File.Copy(sourceFile, wisoDbPath, true);
+                    File.Delete(sourceFile);
+
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

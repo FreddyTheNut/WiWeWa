@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
+using System.Linq;
 using System.Text;
 using WiWeWa.ViewModel.ModelViewModel;
 using Xamarin.Forms;
@@ -32,10 +34,20 @@ namespace WiWeWa.ViewModel.ViewViewModel
             }
         }
 
+        public Command Reset_Command
+        {
+            get
+            {
+                return new Command(_ =>
+                {
+                    ResetSaveData();
+                });
+            }
+        }
+
         public MainPageViewModel()
         {
-            DatabaseViewModel.LoadData();
-            Pruefungen = new ObservableCollection<PruefungViewModel>(DatabaseViewModel.Pruefungen);
+            Pruefungen = new ObservableCollection<PruefungViewModel>(DatabaseViewModel.Instance.Pruefungen);
         }
 
         private void SelectPruefung(PruefungViewModel pruefung)
@@ -48,7 +60,13 @@ namespace WiWeWa.ViewModel.ViewViewModel
 
         private void Start()
         {
-            NavigatePage(typeof(TrialPageViewModel));
+            if(Pruefungen.Any(x => x.IsSelected))
+                NavigatePage(typeof(TrialPageViewModel));
+        }
+
+        private void ResetSaveData()
+        {
+            DatabaseViewModel.Instance.ResetData();
         }
     }
 }

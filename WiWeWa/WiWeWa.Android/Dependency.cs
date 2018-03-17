@@ -17,34 +17,63 @@ namespace WiWeWa.Droid
 {
     public class Dependency : IDependency
     {
-        public string GetLocalFilePath(string file)
+        private string wisoDbPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "IHKWiso.db");
+        private string saveDbPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "SaveData.db");
+
+        public string GetWisoDataBasePath()
         {
-            string path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
-            string dbPath = Path.Combine(path, file);
+            if (!UpdateDatabase())
+                CopyDatabaseIfNotExists();
 
-            CopyDatabaseIfNotExists(dbPath);
-
-            return dbPath;
+            return wisoDbPath;
         }
 
-        private void CopyDatabaseIfNotExists(string dbPath)
+        public string GetSaveDatabasePath()
         {
-            if (!File.Exists(dbPath))
+            return saveDbPath;
+        }
+
+        private void CopyDatabaseIfNotExists()
+        {
+           if (!File.Exists(wisoDbPath) || !(new FileInfo(wisoDbPath).Length > 0))
+           {
+               using (var br = new BinaryReader(Application.Context.Assets.Open("IHKWiso.db")))
+               {
+                   using (var bw = new BinaryWriter(new FileStream(wisoDbPath, FileMode.Create)))
+                   {
+                       byte[] buffer = new byte[2048];
+                       int length = 0;
+                       while ((length = br.Read(buffer, 0, buffer.Length)) > 0)
+                       {
+                           bw.Write(buffer, 0, length);
+                       }
+                   }
+               }
+           }
+        }
+
+        private bool UpdateDatabase()
+        {
+            string sourceFile = "/storage/emulated/0/Download/IHKWiso.db";
+
+            if (File.Exists(sourceFile))
             {
-                using (var br = new BinaryReader(Application.Context.Assets.Open("IHKWiso.db")))
+                try
                 {
-                    using (var bw = new BinaryWriter(new FileStream(dbPath, FileMode.Create)))
-                    {
-                        byte[] buffer = new byte[2048];
-                        int length = 0;
-                        while ((length = br.Read(buffer, 0, buffer.Length)) > 0)
-                        {
-                            bw.Write(buffer, 0, length);
-                        }
-                    }
+                    File.Copy(sourceFile, wisoDbPath);
+                    File.Delete(sourceFile);
+
+                    return true;
+                }
+                catch
+                {
+                    return false;
                 }
             }
-
+            else
+            {
+                return false;
+            }
         }
     }
 }

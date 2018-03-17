@@ -10,31 +10,41 @@ namespace WiWeWa.iOS
 {
     class Dependency : IDependency
     {
-        public string GetLocalFilePath(string file)
+        private string wisoDbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "..", "Library", "Databases", "IHKWiso.db");
+        private string saveDbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "..", "Library", "Databases", "SaveData.db");
+
+        public string GetWisoDataBasePath()
         {
-            string docFolder = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-            string libFolder = Path.Combine(docFolder, "..", "Library", "Databases");
+            string libFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "..", "Library", "Databases");
 
             if (!Directory.Exists(libFolder))
             {
                 Directory.CreateDirectory(libFolder);
             }
 
-            string dbPath = Path.Combine(libFolder, file);
+            if (!UpdateDatabase())
+                CopyDatabaseIfNotExists();
 
-            CopyDatabaseIfNotExists(dbPath);
-
-            return dbPath;
+            return wisoDbPath;
         }
 
-        private void CopyDatabaseIfNotExists(string dbPath)
+        public string GetSaveDatabasePath()
         {
-            if (!File.Exists(dbPath))
+            return saveDbPath;
+        }
+
+        private void CopyDatabaseIfNotExists()
+        {
+            if (!File.Exists(wisoDbPath) || !(new FileInfo(wisoDbPath).Length > 0))
             {
                 var existingDb = NSBundle.MainBundle.PathForResource("IHKWiso", "db");
-                File.Copy(existingDb, dbPath);
+                File.Copy(existingDb, wisoDbPath);
             }
+        }
 
+        private bool UpdateDatabase()
+        {
+            return false;
         }
     }
 }

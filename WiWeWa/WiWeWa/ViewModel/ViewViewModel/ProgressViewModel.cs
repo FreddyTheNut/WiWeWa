@@ -11,7 +11,7 @@ namespace WiWeWa.ViewModel.ViewViewModel
 {
     public class ProgressViewModel : ViewModelBase
     {
-        private ObservableCollection<FrageViewModel> Fragen = new ObservableCollection<FrageViewModel>(DatabaseViewModel.GetSelectedFragen());
+        private ObservableCollection<FrageViewModel> Fragen = new ObservableCollection<FrageViewModel>(DatabaseViewModel.Instance.GetSelectedFragen());
 
         private int unbearbeitetCount = 1;
         private int bearbeitetCount = 0;
