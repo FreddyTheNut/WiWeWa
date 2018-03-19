@@ -21,25 +21,9 @@ namespace WiWeWa
             {typeof(MainPageViewModel), Pages.MainPage }
         };
 
-        public static void OpenPage(Type viewModel)
+        public static void Alert(string title, string message)
         {
-            Device.BeginInvokeOnMainThread(() => App.Current.MainPage = GetPage(viewModel));
-        }
-
-        public static void OpenPage(Type viewModel, Type viewModelClose)
-        {
-            OpenPage(viewModel);
-
-            switch (viewModelsDic[viewModelClose])
-            {
-                case Pages.TrialPage:
-                    ViewModelLocator.ClearTrialPageViewModel();
-                    break;
-
-                case Pages.MainPage:
-                    ViewModelLocator.ClearMainPageViewModel();
-                    break;
-            }
+            App.Current.MainPage.DisplayAlert(title, message, "OK");
         }
 
         public static void NavigatePage(Type viewModel)
@@ -47,19 +31,13 @@ namespace WiWeWa
             Page page = GetPage(viewModel);
 
             INavigation navigation = App.Current.MainPage.Navigation;
+            Device.BeginInvokeOnMainThread(() => navigation.PushAsync(page));
+        }
 
-            //TODO - Fix for UWP | UWP -> NavigationStack 1 on Page, Android -> NavigationStack 0 on Page
-            if (navigation.NavigationStack.Count > 0)
-            {
-                Device.BeginInvokeOnMainThread(() => navigation.PushAsync(page));
-            }            
-            else
-            {
-                NavigationPage navigationPage = new NavigationPage(App.Current.MainPage);
-                navigationPage.PushAsync(page);
-
-                Device.BeginInvokeOnMainThread(() => App.Current.MainPage = navigationPage);
-            }
+        public static void NavigateBack()
+        {
+            INavigation navigation = App.Current.MainPage.Navigation;
+            Device.BeginInvokeOnMainThread(() => navigation.PopAsync());
         }
 
         private static Page GetPage(Type viewModel)

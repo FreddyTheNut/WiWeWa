@@ -121,6 +121,8 @@ namespace WiWeWa.ViewModel.ViewViewModel
                     SetCanSelectCounter();
                 }
             }
+            else
+                NextQuestion();
         }
 
         private void SetIsSolveabel()
@@ -159,14 +161,31 @@ namespace WiWeWa.ViewModel.ViewViewModel
                 else
                 {
                     Frage.Antworten.ToList().ForEach(x => x.Status = AntwortStatus.NotSelected);
-                    List<FrageViewModel> zubearbeitendeFragen = Fragen.Where(x => x.Status != FrageStatus.Richtig && x != Frage).ToList();
+                    List<FrageViewModel> zubearbeitendeFragen = Fragen.Where(x => x.Status != FrageStatus.Richtig).ToList();
 
-                    Frage = zubearbeitendeFragen[new Random().Next(0, zubearbeitendeFragen.Count)];
+                    if(zubearbeitendeFragen.Any())
+                    {
+                        FrageViewModel frageTemp = zubearbeitendeFragen[new Random().Next(0, zubearbeitendeFragen.Count)];
+                        List<AntwortViewModel> antwortenTemp = frageTemp.Antworten.ToList();
+                        frageTemp.Antworten.Clear();
 
-                    Aufloesung = true;
+                        foreach(AntwortViewModel antwortTemp in RandomizeAntworten(antwortenTemp))
+                        {
+                            frageTemp.Antworten.Add(antwortTemp);
+                        }
+                        
+                        Frage = frageTemp;
 
-                    SetIsSolveabel();
-                    SetCanSelectCounter();
+                        Aufloesung = true;
+
+                        SetIsSolveabel();
+                        SetCanSelectCounter();
+                    }
+                    else
+                    {
+                        Beenden();
+                    }
+                 
                 }
             }
             else
@@ -176,6 +195,27 @@ namespace WiWeWa.ViewModel.ViewViewModel
                 SetIsSolveabel();
                 SetCanSelectCounter();
             }
+        }
+
+        private List<AntwortViewModel> RandomizeAntworten(List<AntwortViewModel> tempAntworten)
+        {
+            Random rnd = new Random();
+
+            for (int i = 0; i < tempAntworten.Count; i++)
+            {
+                AntwortViewModel temp = tempAntworten[i];
+                int randomIndex = rnd.Next(i, tempAntworten.Count);
+                tempAntworten[i] = tempAntworten[randomIndex];
+                tempAntworten[randomIndex] = temp;
+            }
+
+            return tempAntworten;
+        }
+
+        private void Beenden()
+        {
+            Alert("Glückwunsch!", "Alle ausgewählten Prüfungen beendet.");
+            NavigateBack();
         }
         #endregion
     }

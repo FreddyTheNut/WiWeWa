@@ -13,14 +13,19 @@ namespace WiWeWa.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(callerName));
         }
 
-        public void OpenPage(Type viewModel)
-        {
-            PageController.OpenPage(viewModel, GetType());
-        }
-
         public void NavigatePage(Type viewModel)
         {
             PageController.NavigatePage(viewModel);
+        }
+
+        public void NavigateBack()
+        {
+            PageController.NavigateBack();
+        }
+
+        public void Alert(string title, string message)
+        {
+            PageController.Alert(title, message);
         }
     }
 }
