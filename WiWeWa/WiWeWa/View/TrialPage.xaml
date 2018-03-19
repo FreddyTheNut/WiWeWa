@@ -31,27 +31,29 @@
     <ContentPage.Content>
         <Grid>
             <Grid.RowDefinitions>
+                <RowDefinition Height="10"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="50"/>
-                <RowDefinition Height="25"/>
             </Grid.RowDefinitions>
-            
-            <Frame Grid.Row="0" BackgroundColor="White" Margin="10" CornerRadius="10">
+
+            <views:ProgressView Grid.Row="0"/>
+
+            <Frame BackgroundColor="{StaticResource SecondaryColor}" Margin="10" CornerRadius="10" Grid.Row="1">
                 <StackLayout Spacing="5" VerticalOptions="Center" HorizontalOptions="Center">
-                    <Label x:Name="zusatzTextLabel" Text="{Binding Frage.ZusatzText}" TextColor="Teal" FontAttributes="Bold"  FontSize="Medium"/>
-                    <Label x:Name="frageTextLabel" Text="{Binding Frage.FrageText}" TextColor="Teal" FontAttributes="Bold"  FontSize="Medium"/>
+                    <Label x:Name="zusatzTextLabel" Text="{Binding Frage.ZusatzText}" TextColor="{StaticResource TextColor}" FontAttributes="Bold"  FontSize="Medium"/>
+                    <Label x:Name="frageTextLabel" Text="{Binding Frage.FrageText}" TextColor="{StaticResource TextColor}" FontAttributes="Bold"  FontSize="Medium"/>
                 </StackLayout>
             </Frame>
-            
-            <Label x:Name="antwortMoeglichkeitenLabel" Text="{Binding CanSelectCounter, StringFormat='Wähle {0}'}" TextColor="White" FontAttributes="Bold" Grid.Row="1"/>
 
-            <flv:FlowListView FlowItemsSource="{Binding Frage.Antworten}" HasUnevenRows="True" FlowColumnCount="1" VerticalOptions="End" HorizontalOptions="Fill" Grid.Row="2">
+            <Label x:Name="antwortMoeglichkeitenLabel" Text="{Binding CanSelectCounter, StringFormat='Wähle {0}'}" TextColor="{StaticResource TextColor}" FontAttributes="Bold" Margin="10,0" Grid.Row="2"/>
+
+            <flv:FlowListView FlowItemsSource="{Binding Frage.Antworten}" FlowColumnCount="1" HasUnevenRows="True" VerticalOptions="End" HorizontalOptions="Fill" Grid.Row="3">
                 <flv:FlowListView.FlowColumnTemplate>
                     <DataTemplate>
                         <Frame BackgroundColor="{Binding Status, Converter={StaticResource AntwortStatusToColorConverter}}" Margin="20,5" VerticalOptions="Fill" HorizontalOptions="Fill">
-                            <Label Text="{Binding AntwortText}" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center"/>
+                            <Label Text="{Binding AntwortText}" TextColor="{StaticResource TextColor}" VerticalOptions="Center" HorizontalOptions="Center"/>
                             <Frame.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding Source={x:Reference TrialPage}, Path=BindingContext.SelectAnswer_Command}" CommandParameter="{Binding .}"/>
                             </Frame.GestureRecognizers>
@@ -60,15 +62,13 @@
                 </flv:FlowListView.FlowColumnTemplate>
             </flv:FlowListView>
 
-            <Button x:Name="nextButton" Text="Next" BackgroundColor="White" IsEnabled="{Binding IsSolvable}" Command="{Binding Next_Command}" Grid.Row="3">
+            <Button x:Name="nextButton" Text="Next" BackgroundColor="{StaticResource PrimaryColor}" TextColor="{StaticResource TextColor}" IsEnabled="{Binding IsSolvable}" Command="{Binding Next_Command}" Grid.Row="4">
                 <Button.Triggers>
                     <Trigger TargetType="Button" Property="IsEnabled" Value="True">
-                        <Setter Property="BackgroundColor" Value="Teal"/>
+                        <Setter Property="BackgroundColor" Value="{StaticResource SecondaryColor}"/>
                     </Trigger>
                 </Button.Triggers>
             </Button>
-
-            <views:ProgressView Grid.Row="4"/>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

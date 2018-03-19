@@ -15,6 +15,10 @@ namespace WiWeWa.View
 		public TrialPage ()
 		{
 			InitializeComponent ();
-		}
+
+            //Workaround Xamarin Bug (https://bugzilla.xamarin.com/show_bug.cgi?id=32899)
+            nextButton.IsEnabled = false;
+            nextButton.SetBinding(Button.IsEnabledProperty, new Binding("IsSolvable"));
+        }
 	}
 }

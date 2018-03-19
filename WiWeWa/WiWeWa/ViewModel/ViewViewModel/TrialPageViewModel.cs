@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using WiWeWa.Model.Enum;
 using WiWeWa.ViewModel.ModelViewModel;
 using Xamarin.Forms;
@@ -41,7 +42,7 @@ namespace WiWeWa.ViewModel.ViewViewModel
             }
         }
 
-        private bool isSolvable;
+        private bool isSolvable = true;
         public bool IsSolvable
         {
             get { return isSolvable; }
@@ -99,7 +100,6 @@ namespace WiWeWa.ViewModel.ViewViewModel
             Fragen = new ObservableCollection<FrageViewModel>(DatabaseViewModel.Instance.GetSelectedFragen());
 
             Aufloesung = true;
-            IsSolvable = false;
 
             NextQuestion();
         }

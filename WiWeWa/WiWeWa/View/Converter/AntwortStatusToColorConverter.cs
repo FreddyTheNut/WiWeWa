@@ -19,23 +19,23 @@ namespace WiWeWa.View.Converter
                 switch (status)
                 {
                     case AntwortStatus.NotSelected:
-                        return Color.White;
+                        return App.Current.Resources["PrimaryColor"];
 
                     case AntwortStatus.Selected:
-                        return Color.Teal;
+                        return App.Current.Resources["SecondaryColor"];
 
                     case AntwortStatus.Right:
-                        return Color.Green;
+                        return App.Current.Resources["RightColor"];
 
                     case AntwortStatus.Wrong:
-                        return Color.Red;
+                        return App.Current.Resources["WrongColor"];
 
                     default:
-                        return Color.White;
+                        return App.Current.Resources["PrimaryColor"];
                 }
             }
 
-            return Color.White;
+            return App.Current.Resources["PrimaryColor"];
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

@@ -141,4 +141,13 @@
   <ItemGroup>
     <BundleResource Include="Resources\icon_high_res.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\reset_white_24_3x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\reset_white_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\reset_white_24_2x.png" />
+  </ItemGroup>
 </Project>

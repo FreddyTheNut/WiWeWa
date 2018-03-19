@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using WiWeWa.ViewModel.ModelViewModel;
 using Xamarin.Forms;
 
@@ -12,6 +13,19 @@ namespace WiWeWa.ViewModel.ViewViewModel
     public class MainPageViewModel : ViewModelBase
     {
         public ObservableCollection<PruefungViewModel> Pruefungen { get; }
+        private bool isStartable;
+        public bool IsStartable
+        {
+            get { return isStartable; }
+            set
+            {
+                if (IsStartable != value)
+                {
+                    isStartable = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         public Command SelectPruefung_Command
         {
@@ -38,9 +52,9 @@ namespace WiWeWa.ViewModel.ViewViewModel
         {
             get
             {
-                return new Command(_ =>
+                return new Command<bool>(answer =>
                 {
-                    ResetSaveData();
+                    ResetSaveData(answer);
                 });
             }
         }
@@ -52,10 +66,18 @@ namespace WiWeWa.ViewModel.ViewViewModel
 
         private void SelectPruefung(PruefungViewModel pruefung)
         {
-            if(!pruefung.IsSelected)
+            if (!pruefung.IsSelected)
+            {
                 pruefung.IsSelected = true;
+                IsStartable = true;
+            }
             else
+            {
                 pruefung.IsSelected = false;
+
+                if (!Pruefungen.Any(x => x.IsSelected))
+                    IsStartable = false;
+            }
         }
 
         private void Start()
@@ -64,9 +86,10 @@ namespace WiWeWa.ViewModel.ViewViewModel
                 NavigatePage(typeof(TrialPageViewModel));
         }
 
-        private void ResetSaveData()
+        private void ResetSaveData(bool answer)
         {
-            DatabaseViewModel.Instance.ResetData();
+            if(answer)
+                DatabaseViewModel.Instance.ResetData();
         }
     }
 }

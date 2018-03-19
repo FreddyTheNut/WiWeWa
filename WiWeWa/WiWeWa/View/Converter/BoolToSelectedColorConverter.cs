@@ -15,12 +15,14 @@ namespace WiWeWa.View.Converter
                 bool isSelected = (bool)value;
 
                 if (isSelected)
-                    return Color.Teal;
+                {
+                    return App.Current.Resources["SecondaryColor"];
+                }
 
-                return Color.White;
+                return App.Current.Resources["PrimaryColor"];
             }
 
-            return Color.White;
+            return App.Current.Resources["PrimaryColor"];
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

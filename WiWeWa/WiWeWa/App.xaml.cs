@@ -15,8 +15,9 @@ namespace WiWeWa
 			InitializeComponent();
             FlowListView.Init();
 
-            MainPage = new NavigationPage(new View.MainPage());
-		}
+            MainPage = new NavigationPage(new View.MainPage()) { BarBackgroundColor = (Color)Resources["SecondaryColor"] };
+
+        }
 
 		protected override void OnStart ()
 		{

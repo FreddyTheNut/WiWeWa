@@ -19,9 +19,9 @@
                 <ColumnDefinition Width="{Binding UnbearbeitetCount, Converter={StaticResource IntToGridLengthConverter}}"/>
             </Grid.ColumnDefinitions>
 
-            <Label BackgroundColor="Green" VerticalOptions="Fill" HorizontalOptions="Fill" Grid.Column="0"/>
-            <Label BackgroundColor="Yellow" VerticalOptions="Fill" HorizontalOptions="Fill" Grid.Column="1"/>
-            <Label BackgroundColor="Red" VerticalOptions="Fill" HorizontalOptions="Fill" Grid.Column="2"/>
+            <Label BackgroundColor="{StaticResource RightColor}" VerticalOptions="Fill" HorizontalOptions="Fill" Grid.Column="0"/>
+            <Label BackgroundColor="{StaticResource WorkColor}" VerticalOptions="Fill" HorizontalOptions="Fill" Grid.Column="1"/>
+            <Label BackgroundColor="{StaticResource WrongColor}" VerticalOptions="Fill" HorizontalOptions="Fill" Grid.Column="2"/>
             <Label BackgroundColor="White" VerticalOptions="Fill" HorizontalOptions="Fill" Grid.Column="3"/>
         </Grid>
     </ContentView.Content>
