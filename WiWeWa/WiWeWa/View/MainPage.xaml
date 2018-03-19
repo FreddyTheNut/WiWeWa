@@ -25,6 +25,7 @@
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="4*"/>
+                <RowDefinition Height="40"/>
                 <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
 
@@ -45,7 +46,13 @@
                 </flv:FlowListView.FlowColumnTemplate>
             </flv:FlowListView>
 
-            <Button x:Name="startButton" Text="Start" BackgroundColor="{StaticResource PrimaryColor}" TextColor="{StaticResource TextColor}" IsEnabled="{Binding IsStartable}" Command="{Binding Start_Command}" Grid.Row="3">
+            <StackLayout Orientation="Horizontal" Spacing="20" Margin="25,0,0,0" Grid.Row="3">
+                <Label Text="Fragen wiederholen?" TextColor="{StaticResource TextColor}" VerticalOptions="Center"/>
+                <Switch IsToggled="{Binding IsWiederholung}"/>
+            </StackLayout>
+
+
+            <Button x:Name="startButton" Text="Start" BackgroundColor="{StaticResource PrimaryColor}" TextColor="{StaticResource TextColor}" IsEnabled="{Binding IsStartable}" Command="{Binding Start_Command}" Grid.Row="4">
                 <Button.Triggers>
                     <Trigger TargetType="Button" Property="IsEnabled" Value="True">
                         <Setter Property="BackgroundColor" Value="{StaticResource SecondaryColor}"/>

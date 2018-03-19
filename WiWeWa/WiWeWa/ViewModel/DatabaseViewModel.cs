@@ -27,6 +27,7 @@ namespace WiWeWa.ViewModel
         private readonly SQLiteConnection saveDatabase = new SQLiteConnection(DependencyService.Get<IDependency>().GetSaveDatabasePath());
 
         public List<PruefungViewModel> Pruefungen { get; } = new List<PruefungViewModel>();
+        public bool IsWiederholung { get; set; }
 
 
         public DatabaseViewModel()

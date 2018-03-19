@@ -148,8 +148,13 @@ namespace WiWeWa.ViewModel.ViewViewModel
                         selectedAntworten.ForEach(x => { if (x.Richtig) x.Status = AntwortStatus.Right; else x.Status = AntwortStatus.Wrong; });
 
                         if (selectedAntworten.TrueForAll(x => x.Status == AntwortStatus.Right))
-                            //TODO - Status.Bearbeitung
-                            Frage.Status = FrageStatus.Richtig;
+                            if (DatabaseViewModel.Instance.IsWiederholung)
+                                if (Frage.Status != FrageStatus.Bearbeitet)
+                                    Frage.Status = FrageStatus.Bearbeitet;
+                                else
+                                    Frage.Status = FrageStatus.Richtig;
+                            else
+                                Frage.Status = FrageStatus.Richtig;
                         else
                             Frage.Status = FrageStatus.Falsch;
 

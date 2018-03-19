@@ -27,6 +27,20 @@ namespace WiWeWa.ViewModel.ViewViewModel
             }
         }
 
+        private bool isWiederholung;
+        public bool IsWiederholung
+        {
+            get { return isWiederholung; }
+            set
+            {
+                if (IsWiederholung != value)
+                {
+                    isWiederholung = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         public Command SelectPruefung_Command
         {
             get
@@ -82,7 +96,9 @@ namespace WiWeWa.ViewModel.ViewViewModel
 
         private void Start()
         {
-            if(Pruefungen.Any(x => x.IsSelected))
+            DatabaseViewModel.Instance.IsWiederholung = IsWiederholung;
+
+            if (Pruefungen.Any(x => x.IsSelected))
                 NavigatePage(typeof(TrialPageViewModel));
         }
 
