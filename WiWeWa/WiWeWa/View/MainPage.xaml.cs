@@ -15,7 +15,6 @@ namespace WiWeWa.View
 			InitializeComponent();
 
             //Workaround Xamarin Bug (https://bugzilla.xamarin.com/show_bug.cgi?id=32899)
-            startButton.IsEnabled = false;
             startButton.SetBinding(Button.IsEnabledProperty, new Binding("IsStartable"));
         }
 

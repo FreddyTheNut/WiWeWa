@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SMPHCracker.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,8 +18,12 @@ namespace WiWeWa.View
 			InitializeComponent ();
 
             //Workaround Xamarin Bug (https://bugzilla.xamarin.com/show_bug.cgi?id=32899)
-            nextButton.IsEnabled = false;
             nextButton.SetBinding(Button.IsEnabledProperty, new Binding("IsSolvable"));
         }
-	}
+
+        protected override void OnDisappearing()
+        {
+            ViewModelLocator.ClearTrialPageViewModel();
+        }
+    }
 }
