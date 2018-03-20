@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AppCenter.Push;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -76,6 +77,8 @@ namespace WiWeWa.ViewModel.ViewViewModel
         public MainPageViewModel()
         {
             Pruefungen = new ObservableCollection<PruefungViewModel>(DatabaseViewModel.Instance.Pruefungen);
+
+
         }
 
         private void SelectPruefung(PruefungViewModel pruefung)
@@ -94,8 +97,11 @@ namespace WiWeWa.ViewModel.ViewViewModel
             }
         }
 
-        private void Start()
+        private async void Start()
         {
+            bool isEnabled = await Push.IsEnabledAsync();
+
+
             DatabaseViewModel.Instance.IsWiederholung = IsWiederholung;
 
             if (Pruefungen.Any(x => x.IsSelected))

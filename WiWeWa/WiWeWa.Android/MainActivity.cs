@@ -6,6 +6,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
+using Microsoft.AppCenter.Push;
 
 namespace WiWeWa.Droid
 {
@@ -20,6 +21,8 @@ namespace WiWeWa.Droid
             base.OnCreate(bundle);
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
+
+            Push.SetSenderId("53796845697");
             LoadApplication(new App());
         }
     }
