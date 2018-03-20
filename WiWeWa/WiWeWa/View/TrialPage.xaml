@@ -47,7 +47,7 @@
                 </StackLayout>
             </Frame>
 
-            <Label x:Name="antwortMoeglichkeitenLabel" Text="{Binding CanSelectCounter, StringFormat='Wähle {0}'}" TextColor="{StaticResource TextColor}" FontAttributes="Bold" Margin="10,0" Grid.Row="2"/>
+            <Label x:Name="antwortMoeglichkeitenLabel" Text="{Binding SelectCounterString}" TextColor="{StaticResource TextColor}" FontAttributes="Bold" Margin="10,0" Grid.Row="2"/>
 
             <flv:FlowListView FlowItemsSource="{Binding Frage.Antworten}" FlowColumnCount="1" HasUnevenRows="True" VerticalOptions="End" HorizontalOptions="Fill" Grid.Row="3">
                 <flv:FlowListView.FlowColumnTemplate>

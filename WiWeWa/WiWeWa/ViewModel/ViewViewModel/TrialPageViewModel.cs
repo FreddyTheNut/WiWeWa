@@ -56,15 +56,16 @@ namespace WiWeWa.ViewModel.ViewViewModel
             }
         }
 
-        private int canSelectCounter;
-        public int CanSelectCounter
+        private string selectCounterString;
+
+        public string SelectCounterString
         {
-            get { return canSelectCounter; }
+            get { return selectCounterString; }
             set
             {
-                if (CanSelectCounter != value)
+                if (SelectCounterString != value)
                 {
-                    canSelectCounter = value;
+                    selectCounterString = value;
                     OnPropertyChanged();
                 }
             }
@@ -114,8 +115,6 @@ namespace WiWeWa.ViewModel.ViewViewModel
         {
             Fragen = new ObservableCollection<FrageViewModel>(DatabaseViewModel.Instance.GetSelectedFragen());
 
-            Aufloesung = true;
-
             NextQuestion();
         }
         #endregion
@@ -133,7 +132,7 @@ namespace WiWeWa.ViewModel.ViewViewModel
                         antwort.Status = AntwortStatus.NotSelected;
 
                     SetIsSolveabel();
-                    SetCanSelectCounter();
+                    SetSelectCounter();
                 }
             }
             else
@@ -150,83 +149,72 @@ namespace WiWeWa.ViewModel.ViewViewModel
                 ButtonColor = (Color)App.Current.Resources["PrimaryColor"];
         }
 
-        private void SetCanSelectCounter()
+        private void SetSelectCounter()
         {
-            CanSelectCounter = Frage.RichtigeAnzahl - Frage.Antworten.Where(x => x.Status == AntwortStatus.Selected).Count();
+            int count = Frage.RichtigeAnzahl - Frage.Antworten.Where(x => x.Status == AntwortStatus.Selected).Count();
+            SelectCounterString = $"Wähle {count} von {Frage.Antwortmoeglichkeiten}";
         }
 
         private void NextQuestion()
         {
-            if (Frage != null)
+            if (Aufloesung)
             {
-                if (Aufloesung)
+                List<AntwortViewModel> selectedAntworten = Frage.Antworten.Where(x => x.Status == AntwortStatus.Selected).ToList();
+
+                if (selectedAntworten.Count() == Frage.RichtigeAnzahl)
                 {
-                    List<AntwortViewModel> selectedAntworten = Frage.Antworten.Where(x => x.Status == AntwortStatus.Selected).ToList();
+                    selectedAntworten.ForEach(x => { if (x.Richtig) x.Status = AntwortStatus.Right; else x.Status = AntwortStatus.Wrong; });
 
-                    if (selectedAntworten.Count() == Frage.RichtigeAnzahl)
+                    if (selectedAntworten.TrueForAll(x => x.Status == AntwortStatus.Right))
                     {
-                        selectedAntworten.ForEach(x => { if (x.Richtig) x.Status = AntwortStatus.Right; else x.Status = AntwortStatus.Wrong; });
+                        ButtonColor = (Color)App.Current.Resources["RightColor"];
 
-                        if (selectedAntworten.TrueForAll(x => x.Status == AntwortStatus.Right))
-                        {
-                            ButtonColor = (Color)App.Current.Resources["RightColor"];
-
-                            if (DatabaseViewModel.Instance.IsWiederholung)
-                                if (Frage.Status != FrageStatus.Bearbeitet)
-                                    Frage.Status = FrageStatus.Bearbeitet;
-                                else
-                                    Frage.Status = FrageStatus.Richtig;
+                        if (DatabaseViewModel.Instance.IsWiederholung)
+                            if (Frage.Status != FrageStatus.Bearbeitet)
+                                Frage.Status = FrageStatus.Bearbeitet;
                             else
                                 Frage.Status = FrageStatus.Richtig;
-                        }
                         else
-                        {
-                            ButtonColor = (Color)App.Current.Resources["WrongColor"];
-
-                            Frage.Status = FrageStatus.Falsch;
-                        }
-
-                        Aufloesung = false;
-
-                        Frage.Antworten.Where(x => x.Richtig).ToList().ForEach(x => x.Status = AntwortStatus.Right);
-                    }
-                }
-                else
-                {
-                    Frage.Antworten.ToList().ForEach(x => x.Status = AntwortStatus.NotSelected);
-                    List<FrageViewModel> zubearbeitendeFragen = Fragen.Where(x => x.Status != FrageStatus.Richtig).ToList();
-
-                    if(zubearbeitendeFragen.Any())
-                    {
-                        FrageViewModel frageTemp = zubearbeitendeFragen[new Random().Next(0, zubearbeitendeFragen.Count)];
-                        List<AntwortViewModel> antwortenTemp = frageTemp.Antworten.ToList();
-                        frageTemp.Antworten.Clear();
-
-                        foreach(AntwortViewModel antwortTemp in RandomizeAntworten(antwortenTemp))
-                        {
-                            frageTemp.Antworten.Add(antwortTemp);
-                        }
-                        
-                        Frage = frageTemp;
-
-                        Aufloesung = true;
-
-                        SetIsSolveabel();
-                        SetCanSelectCounter();
+                            Frage.Status = FrageStatus.Richtig;
                     }
                     else
                     {
-                        Beenden();
+                        ButtonColor = (Color)App.Current.Resources["WrongColor"];
+                        Frage.Status = FrageStatus.Falsch;
                     }
-                 
+
+                    Aufloesung = false;
+                    Frage.Antworten.Where(x => x.Richtig).ToList().ForEach(x => x.Status = AntwortStatus.Right);
                 }
             }
             else
             {
-                Frage = Fragen[new Random().Next(0, Fragen.Count)];
+                if (Frage != null)
+                    Frage.Antworten.ToList().ForEach(x => x.Status = AntwortStatus.NotSelected);
 
-                SetIsSolveabel();
-                SetCanSelectCounter();
+                List<FrageViewModel> zubearbeitendeFragen = Fragen.Where(x => x.Status != FrageStatus.Richtig).ToList();
+
+                if(zubearbeitendeFragen.Any())
+                {
+                    FrageViewModel frageTemp = zubearbeitendeFragen[new Random().Next(0, zubearbeitendeFragen.Count)];
+                    List<AntwortViewModel> antwortenTemp = frageTemp.Antworten.ToList();
+                    frageTemp.Antworten.Clear();
+
+                    foreach(AntwortViewModel antwortTemp in RandomizeAntworten(antwortenTemp))
+                    {
+                        frageTemp.Antworten.Add(antwortTemp);
+                    }
+
+                    Frage = frageTemp;
+                    Aufloesung = true;
+                    SetIsSolveabel();
+                    SetSelectCounter();
+                }
+                else
+                {
+                    Beenden();
+                }
+             
             }
         }
 
