@@ -62,12 +62,14 @@
                 </flv:FlowListView.FlowColumnTemplate>
             </flv:FlowListView>
 
-            <Button x:Name="nextButton" Text="Next" BackgroundColor="{StaticResource PrimaryColor}" TextColor="{StaticResource TextColor}" IsEnabled="{Binding IsSolvable}" Command="{Binding Next_Command}" Grid.Row="4">
+            <Button x:Name="nextButton" Text="Next" BackgroundColor="{Binding ButtonColor}" TextColor="{StaticResource TextColor}" IsEnabled="{Binding IsSolvable}" Command="{Binding Next_Command}" Grid.Row="4">
+                <!-- Disables Background coloring with ViewModel!
                 <Button.Triggers>
-                    <Trigger TargetType="Button" Property="IsEnabled" Value="True">
-                        <Setter Property="BackgroundColor" Value="{StaticResource SecondaryColor}"/>
+                    <Trigger TargetType="Button" Property="IsEnabled" Value="False">
+                        <Setter Property="BackgroundColor" Value="{StaticResource PrimaryColor}"/>
                     </Trigger>
                 </Button.Triggers>
+                -->
             </Button>
         </Grid>
     </ContentPage.Content>

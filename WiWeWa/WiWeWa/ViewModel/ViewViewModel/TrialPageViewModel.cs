@@ -69,6 +69,21 @@ namespace WiWeWa.ViewModel.ViewViewModel
                 }
             }
         }
+
+        private Color buttonColor = (Color)App.Current.Resources["PrimaryColor"];
+        public Color ButtonColor
+        {
+            get { return buttonColor; }
+            set
+            {
+                if (ButtonColor != value)
+                {
+                    buttonColor = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         #endregion
 
         #region Commands
@@ -128,6 +143,11 @@ namespace WiWeWa.ViewModel.ViewViewModel
         private void SetIsSolveabel()
         {
             IsSolvable = Frage.Antworten.Where(x => x.Status == AntwortStatus.Selected).ToList().Count() == Frage.RichtigeAnzahl;
+
+            if(IsSolvable)
+                ButtonColor = (Color)App.Current.Resources["SecondaryColor"];
+            else
+                ButtonColor = (Color)App.Current.Resources["PrimaryColor"];
         }
 
         private void SetCanSelectCounter()
@@ -148,6 +168,9 @@ namespace WiWeWa.ViewModel.ViewViewModel
                         selectedAntworten.ForEach(x => { if (x.Richtig) x.Status = AntwortStatus.Right; else x.Status = AntwortStatus.Wrong; });
 
                         if (selectedAntworten.TrueForAll(x => x.Status == AntwortStatus.Right))
+                        {
+                            ButtonColor = (Color)App.Current.Resources["RightColor"];
+
                             if (DatabaseViewModel.Instance.IsWiederholung)
                                 if (Frage.Status != FrageStatus.Bearbeitet)
                                     Frage.Status = FrageStatus.Bearbeitet;
@@ -155,8 +178,13 @@ namespace WiWeWa.ViewModel.ViewViewModel
                                     Frage.Status = FrageStatus.Richtig;
                             else
                                 Frage.Status = FrageStatus.Richtig;
+                        }
                         else
+                        {
+                            ButtonColor = (Color)App.Current.Resources["WrongColor"];
+
                             Frage.Status = FrageStatus.Falsch;
+                        }
 
                         Aufloesung = false;
 

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
+using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
@@ -26,6 +28,16 @@ namespace WiWeWa.ViewModel
         public void Alert(string title, string message)
         {
             PageController.Alert(title, message);
+        }
+
+        public void AnalyticCenter(string eventbez)
+        {
+            Analytics.TrackEvent(eventbez);
+        }
+        
+        public void ErrorCenter(Exception exeption)
+        {
+            Crashes.TrackError(exeption);
         }
     }
 }

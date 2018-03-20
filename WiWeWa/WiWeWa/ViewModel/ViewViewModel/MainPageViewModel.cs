@@ -95,7 +95,7 @@ namespace WiWeWa.ViewModel.ViewViewModel
             }
         }
 
-        private async void Start()
+        private void Start()
         {
             DatabaseViewModel.Instance.IsWiederholung = IsWiederholung;
 
