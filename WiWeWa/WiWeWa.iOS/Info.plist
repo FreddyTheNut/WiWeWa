@@ -50,5 +50,19 @@
 	<string>LaunchScreen</string>
 	<key>CFBundleName</key>
 	<string>WiWeWa</string>
+	<key>CFBundleDocumentTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeName</key>
+			<string>Dokumenttyp 1</string>
+		</dict>
+	</array>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>URL-Typ 1</string>
+		</dict>
+	</array>
 </dict>
 </plist>
