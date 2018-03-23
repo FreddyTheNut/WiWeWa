@@ -67,9 +67,9 @@ namespace WiWeWa.ViewModel.ViewViewModel
         {
             get
             {
-                return new Command<bool>(answer =>
+                return new Command(_ =>
                 {
-                    ResetSaveData(answer);
+                    ResetSaveData();
                 });
             }
         }
@@ -103,10 +103,20 @@ namespace WiWeWa.ViewModel.ViewViewModel
                 NavigatePage(typeof(TrialPageViewModel));
         }
 
-        private void ResetSaveData(bool answer)
+        private async void ResetSaveData()
         {
-            if(answer)
-                DatabaseViewModel.Instance.ResetData();
+            List<string> pruefungenString = new List<string>();
+            Pruefungen.ToList().ForEach(x => pruefungenString.Add(x.Bezeichnung));
+
+            string selection = await ActionSheetAlert("Prüfung zurücksetzen",pruefungenString.ToArray());
+            
+            if(selection != null && !selection.Equals("Abbrechen"))
+            {
+                DatabaseViewModel.Instance.ResetPruefungData(Pruefungen.FirstOrDefault(x => x.Bezeichnung == selection));
+                DependencyService.Get<IDependency>().MakeToast($"{selection} zurückgesetzt!");
+            }
+
+
         }
     }
 }

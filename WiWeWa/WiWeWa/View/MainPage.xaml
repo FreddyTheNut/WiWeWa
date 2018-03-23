@@ -16,7 +16,7 @@
     </ContentPage.Resources>
     
     <ContentPage.ToolbarItems>
-        <ToolbarItem Name="Reset" Icon="reset_white_24" Clicked="Reset_Clicked"/>
+        <ToolbarItem Name="Reset" Icon="reset_white_24" Command="{Binding Reset_Command}"/>
     </ContentPage.ToolbarItems>
     
     <ContentPage.Content>

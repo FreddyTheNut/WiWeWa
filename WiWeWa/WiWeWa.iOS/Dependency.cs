@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using UIKit;
 using WiWeWa.iOS;
 
 [assembly: Xamarin.Forms.Dependency(typeof(Dependency))]
@@ -62,6 +63,20 @@ namespace WiWeWa.iOS
                     File.Copy(existingDb, wisoDbPath);
                 }
             }
+        }
+
+        public void MakeToast(string message)
+        {
+            var alert = UIAlertController.Create(null, message, UIAlertControllerStyle.Alert);
+            UIApplication.SharedApplication.KeyWindow.RootViewController.PresentViewController(alert, true, null);
+
+            NSTimer.CreateScheduledTimer(3.5, (obj) =>
+            {
+                if (alert != null)
+                {
+                    alert.DismissViewController(true, null);
+                }
+            });
         }
     }
 }

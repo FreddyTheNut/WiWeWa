@@ -84,5 +84,10 @@ namespace WiWeWa.UWP
                 }
             }
         }
+
+        public void MakeToast(string message)
+        {
+            //TODO - implement Toast for UWP
+        }
     }
 }

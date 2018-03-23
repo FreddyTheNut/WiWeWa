@@ -17,13 +17,5 @@ namespace WiWeWa.View
             //Workaround Xamarin Bug (https://bugzilla.xamarin.com/show_bug.cgi?id=32899)
             startButton.SetBinding(Button.IsEnabledProperty, new Binding("IsStartable"));
         }
-
-        private async void Reset_Clicked(object sender, EventArgs e)
-        {
-            bool answer = await DisplayAlert("Achtung!", "Aktuellen Stand zurücksetzen?", "Ja", "Abbrechen");
-
-            ((MainPageViewModel)BindingContext)?.Reset_Command.Execute(answer);
-        }
-
     }
 }

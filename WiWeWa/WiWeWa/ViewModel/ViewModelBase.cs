@@ -3,6 +3,7 @@ using Microsoft.AppCenter.Crashes;
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 
 namespace WiWeWa.ViewModel
 {
@@ -28,6 +29,11 @@ namespace WiWeWa.ViewModel
         public void Alert(string title, string message)
         {
             PageController.Alert(title, message);
+        }
+
+        public async static Task<string> ActionSheetAlert(string title, params string[] actions)
+        {
+            return await PageController.ActionSheetAlert(title, actions);
         }
 
         public void AnalyticCenter(string eventbez)

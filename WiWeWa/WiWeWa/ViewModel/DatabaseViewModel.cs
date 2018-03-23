@@ -76,10 +76,23 @@ namespace WiWeWa.ViewModel
             }
         }
 
-        public void ResetData()
+        public void ResetAllData()
         {
             saveDatabase.DeleteAll<SaveDataViewModel>();
             Pruefungen.SelectMany(x => x.Fragen).Where(x => x.Status != FrageStatus.Unbearbeitet).ToList().ForEach(x => x.Status = FrageStatus.Unbearbeitet);
+        }
+
+        public void ResetPruefungData(PruefungViewModel pruefung)
+        {
+            foreach(SaveDataViewModel save in saveDatabase.Table<SaveDataViewModel>().ToList())
+            {
+                if(pruefung.Fragen.Any(x => x.Id == save.Id))
+                {
+                    saveDatabase.Delete<SaveDataViewModel>(save.Id);
+                }
+            }
+
+            pruefung.Fragen.Where(x => x.Status != FrageStatus.Unbearbeitet).ToList().ForEach(x => x.Status = FrageStatus.Unbearbeitet);
         }
 
 

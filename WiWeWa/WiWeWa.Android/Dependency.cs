@@ -83,5 +83,10 @@ namespace WiWeWa.Droid
                 }
             }
         }
+
+        public void MakeToast(string message)
+        {
+            Toast.MakeText(Application.Context, message, ToastLength.Long).Show();
+        }
     }
 }

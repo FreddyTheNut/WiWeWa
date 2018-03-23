@@ -4,5 +4,6 @@
     {
         string GetWisoDataBasePath();
         string GetSaveDatabasePath();
+        void MakeToast(string message);
     }
 }

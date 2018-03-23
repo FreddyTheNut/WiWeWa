@@ -11,6 +11,7 @@ namespace WiWeWa.ViewModel.ModelViewModel
     {
         private SaveData saveData = new SaveData();
 
+        [PrimaryKey]
         public int Id
         {
             get { return saveData.Id; }

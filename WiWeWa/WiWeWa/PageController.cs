@@ -1,6 +1,7 @@
 ﻿using SMPHCracker.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using WiWeWa.View;
 using WiWeWa.ViewModel.ViewViewModel;
 using Xamarin.Forms;
@@ -24,6 +25,11 @@ namespace WiWeWa
         public static void Alert(string title, string message)
         {
             App.Current.MainPage.DisplayAlert(title, message, "OK");
+        }
+
+        public async static Task<string> ActionSheetAlert(string title, params string[] actions)
+        {
+            return await App.Current.MainPage.DisplayActionSheet(title, "Abbrechen", null, actions);
         }
 
         public static void NavigatePage(Type viewModel)
