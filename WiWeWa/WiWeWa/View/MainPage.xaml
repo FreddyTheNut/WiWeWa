@@ -29,7 +29,7 @@
                 <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
 
-            <Label Text="WiSo Weshalb Warum?" TextColor="{StaticResource SecondaryColor}" FontSize="Large" FontAttributes="Bold" VerticalOptions="End" HorizontalOptions="Center" Grid.Row="0"/>
+            <Label Text="WiSo Weshalb Warum? - UpdateTest" TextColor="{StaticResource SecondaryColor}" FontSize="Large" FontAttributes="Bold" VerticalOptions="End" HorizontalOptions="Center" Grid.Row="0"/>
 
             <Image Source="icon_high_res.png" VerticalOptions="Start" HorizontalOptions="Center" Grid.Row="1"/>
 

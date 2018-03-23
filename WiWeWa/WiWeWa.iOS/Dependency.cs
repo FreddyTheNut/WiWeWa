@@ -22,8 +22,7 @@ namespace WiWeWa.iOS
                 Directory.CreateDirectory(libFolder);
             }
 
-            if (!UpdateDatabase())
-                CopyDatabaseIfNotExists();
+            CopyDatabaseIfNotExists();
 
             return wisoDbPath;
         }
@@ -35,16 +34,34 @@ namespace WiWeWa.iOS
 
         private void CopyDatabaseIfNotExists()
         {
-            if (!File.Exists(wisoDbPath) || !(new FileInfo(wisoDbPath).Length > 0))
+            if (!File.Exists(wisoDbPath))
             {
                 var existingDb = NSBundle.MainBundle.PathForResource("IHKWiso", "db");
                 File.Copy(existingDb, wisoDbPath);
             }
-        }
+            else
+            {
+                string wisoDB;
+                string wisoDBcopy;
 
-        private bool UpdateDatabase()
-        {
-            return false;
+                using (StreamReader sr = new StreamReader(NSBundle.MainBundle.PathForResource("IHKWiso", "db")))
+                {
+                    wisoDB = sr.ReadToEnd();
+                }
+
+                using (StreamReader sr = new StreamReader(wisoDbPath))
+                {
+                    wisoDBcopy = sr.ReadToEnd();
+                }
+
+                if (wisoDB.Length != wisoDBcopy.Length)
+                {
+                    File.Delete(wisoDbPath);
+
+                    var existingDb = NSBundle.MainBundle.PathForResource("IHKWiso", "db");
+                    File.Copy(existingDb, wisoDbPath);
+                }
+            }
         }
     }
 }

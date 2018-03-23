@@ -22,8 +22,7 @@ namespace WiWeWa.Droid
 
         public string GetWisoDataBasePath()
         {
-            if (!UpdateDatabase())
-                CopyDatabaseIfNotExists();
+            CopyDatabaseIfNotExists();
 
             return wisoDbPath;
         }
@@ -35,44 +34,53 @@ namespace WiWeWa.Droid
 
         private void CopyDatabaseIfNotExists()
         {
-           if (!File.Exists(wisoDbPath) || !(new FileInfo(wisoDbPath).Length > 0))
-           {
-               using (var br = new BinaryReader(Application.Context.Assets.Open("IHKWiso.db")))
-               {
-                   using (var bw = new BinaryWriter(new FileStream(wisoDbPath, FileMode.Create)))
-                   {
-                       byte[] buffer = new byte[2048];
-                       int length = 0;
-                       while ((length = br.Read(buffer, 0, buffer.Length)) > 0)
-                       {
-                           bw.Write(buffer, 0, length);
-                       }
-                   }
-               }
-           }
-        }
-
-        private bool UpdateDatabase()
-        {
-            string sourceFile = "/storage/emulated/0/Download/IHKWiso.db";
-
-            if (File.Exists(sourceFile))
+            if (!File.Exists(wisoDbPath))
             {
-                try
+                using (var br = new BinaryReader(Application.Context.Assets.Open("IHKWiso.db")))
                 {
-                    File.Copy(sourceFile, wisoDbPath);
-                    File.Delete(sourceFile);
-
-                    return true;
-                }
-                catch
-                {
-                    return false;
+                    using (var bw = new BinaryWriter(new FileStream(wisoDbPath, FileMode.Create)))
+                    {
+                        byte[] buffer = new byte[2048];
+                        int length = 0;
+                        while ((length = br.Read(buffer, 0, buffer.Length)) > 0)
+                        {
+                            bw.Write(buffer, 0, length);
+                        }
+                    }
                 }
             }
             else
             {
-                return false;
+                string wisoDB;
+                string wisoDBcopy;
+
+                using (StreamReader sr = new StreamReader(Application.Context.Assets.Open("IHKWiso.db")))
+                {
+                    wisoDB = sr.ReadToEnd();
+                }
+
+                using (StreamReader sr = new StreamReader(wisoDbPath))
+                {
+                    wisoDBcopy = sr.ReadToEnd();
+                }
+
+                if (wisoDB.Length != wisoDBcopy.Length)
+                {
+                    File.Delete(wisoDbPath);
+
+                    using (var br = new BinaryReader(Application.Context.Assets.Open("IHKWiso.db")))
+                    {
+                        using (var bw = new BinaryWriter(new FileStream(wisoDbPath, FileMode.Create)))
+                        {
+                            byte[] buffer = new byte[2048];
+                            int length = 0;
+                            while ((length = br.Read(buffer, 0, buffer.Length)) > 0)
+                            {
+                                bw.Write(buffer, 0, length);
+                            }
+                        }
+                    }
+                }
             }
         }
     }

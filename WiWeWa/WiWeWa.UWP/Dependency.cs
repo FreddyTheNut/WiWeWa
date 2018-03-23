@@ -19,8 +19,7 @@ namespace WiWeWa.UWP
 
         public string GetWisoDataBasePath()
         {
-            if (!UpdateDatabase())
-                CopyDatabaseIfNotExists();
+            CopyDatabaseIfNotExists();
 
             return wisoDbPath;
         }
@@ -34,11 +33,9 @@ namespace WiWeWa.UWP
         {
             var storageFile = IsolatedStorageFile.GetUserStoreForApplication();
 
-            if (!storageFile.FileExists(wisoDbPath) || !(new FileInfo(wisoDbPath).Length > 0))
+            if (!storageFile.FileExists(wisoDbPath))
             {
-                var assembly = this.GetType().Assembly;
-
-                using (var resourceStream = assembly.GetManifestResourceStream("WiWeWa.UWP.IHKWiso.db"))
+                using (var resourceStream = this.GetType().Assembly.GetManifestResourceStream("WiWeWa.UWP.IHKWiso.db"))
                 {
                     using (var fileStream = storageFile.CreateFile(wisoDbPath))
                     {
@@ -52,29 +49,39 @@ namespace WiWeWa.UWP
                     }
                 }
             }
-        }
-
-        private bool UpdateDatabase()
-        {
-            string sourceFile = Windows.Storage.UserDataPaths.GetDefault().Downloads;
-
-            if (File.Exists(sourceFile))
-            {
-                try
-                {
-                    File.Copy(sourceFile, wisoDbPath, true);
-                    File.Delete(sourceFile);
-
-                    return true;
-                }
-                catch
-                {
-                    return false;
-                }
-            }
             else
             {
-                return false;
+                string wisoDB;
+                string wisoDBcopy;
+
+                using (StreamReader sr = new StreamReader(this.GetType().Assembly.GetManifestResourceStream("WiWeWa.UWP.IHKWiso.db")))
+                {
+                    wisoDB = sr.ReadToEnd();
+                }
+
+                using (StreamReader sr = new StreamReader(wisoDbPath))
+                {
+                    wisoDBcopy = sr.ReadToEnd();
+                }
+
+                if (wisoDB.Length != wisoDBcopy.Length)
+                {
+                    File.Delete(wisoDbPath);
+
+                    using (var resourceStream = this.GetType().Assembly.GetManifestResourceStream("WiWeWa.UWP.IHKWiso.db"))
+                    {
+                        using (var fileStream = storageFile.CreateFile(wisoDbPath))
+                        {
+                            byte[] readBuffer = new byte[4096];
+                            int bytes = -1;
+
+                            while ((bytes = resourceStream.Read(readBuffer, 0, readBuffer.Length)) > 0)
+                            {
+                                fileStream.Write(readBuffer, 0, bytes);
+                            }
+                        }
+                    }
+                }
             }
         }
     }
