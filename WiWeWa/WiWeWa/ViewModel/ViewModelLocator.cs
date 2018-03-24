@@ -66,8 +66,6 @@ namespace SMPHCracker.ViewModel
         #endregion
 
         #region ProgressViewModel
-        private static ProgressViewModel progressView;
-
         public ProgressViewModel ProgressView
         {
             get

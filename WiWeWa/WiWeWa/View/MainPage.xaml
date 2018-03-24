@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:flv="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView"
              xmlns:converter="clr-namespace:WiWeWa.View.Converter"
              BindingContext="{Binding MainPage, Source={StaticResource ViewModelLocator}}"
              x:Name="MainPage"
@@ -33,24 +32,28 @@
 
             <Image Source="icon_high_res.png" VerticalOptions="Start" HorizontalOptions="Center" Grid.Row="1"/>
 
-            <flv:FlowListView FlowItemsSource="{Binding Pruefungen}" FlowColumnCount="1" HasUnevenRows="True" VerticalOptions="End" HorizontalOptions="Fill" Grid.Row="2">
-                <flv:FlowListView.FlowColumnTemplate>
+            <ListView ItemsSource="{Binding Pruefungen}" HasUnevenRows="True" VerticalOptions="End" HorizontalOptions="Fill" Grid.Row="2">
+                <ListView.ItemTemplate>
                     <DataTemplate>
-                        <Frame BackgroundColor="{Binding IsSelected, Converter={StaticResource BoolToSelectedColorConverter}}" Margin="20,5" VerticalOptions="Fill" HorizontalOptions="Fill">
-                            <Label Text="{Binding Bezeichnung}" TextColor="{StaticResource TextColor}" FontSize="Medium" VerticalOptions="Center" HorizontalOptions="Center"/>
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding Source={x:Reference MainPage}, Path=BindingContext.SelectPruefung_Command}" CommandParameter="{Binding .}"/>
-                            </Frame.GestureRecognizers>
-                        </Frame>
+                        <ViewCell>
+                            <StackLayout>
+                                <Frame BackgroundColor="{Binding IsSelected, Converter={StaticResource BoolToSelectedColorConverter}}" InputTransparent="False" Margin="20,5" VerticalOptions="Fill" HorizontalOptions="Fill">
+                                    <Label Text="{Binding Bezeichnung}" TextColor="{StaticResource TextColor}" FontSize="Medium" VerticalOptions="Center" HorizontalOptions="Center"/>
+                                </Frame>
+
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={x:Reference MainPage}, Path=BindingContext.SelectPruefung_Command}" CommandParameter="{Binding .}"/>
+                                </StackLayout.GestureRecognizers>
+                            </StackLayout>
+                        </ViewCell>
                     </DataTemplate>
-                </flv:FlowListView.FlowColumnTemplate>
-            </flv:FlowListView>
+                </ListView.ItemTemplate>
+            </ListView>
 
             <StackLayout Orientation="Horizontal" Spacing="20" Margin="25,0,0,0" Grid.Row="3">
                 <Label Text="Fragen wiederholen?" TextColor="{StaticResource TextColor}" VerticalOptions="Center"/>
                 <Switch IsToggled="{Binding IsWiederholung}"/>
             </StackLayout>
-
 
             <Button x:Name="startButton" Text="Start" BackgroundColor="{StaticResource PrimaryColor}" TextColor="{StaticResource TextColor}" IsEnabled="{Binding IsStartable}" Command="{Binding Start_Command}" Grid.Row="4">
                 <Button.Triggers>

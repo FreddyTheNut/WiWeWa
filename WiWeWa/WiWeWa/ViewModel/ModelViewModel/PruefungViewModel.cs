@@ -1,6 +1,8 @@
 ﻿using SQLite;
 using System.Collections.ObjectModel;
+using System.Linq;
 using WiWeWa.Model;
+using WiWeWa.Model.Enum;
 
 namespace WiWeWa.ViewModel.ModelViewModel
 {
@@ -75,7 +77,25 @@ namespace WiWeWa.ViewModel.ModelViewModel
         {
             get
             {
-                return $"Prüfung {Jahreszeit} {Jahr}";
+                return $"Prüfung {Jahreszeit} {Jahr} - {Fragen.Count(x => x.Status == FrageStatus.Richtig)}/{Fragen.Count}";
+            }
+        }
+
+        public PruefungViewModel()
+        {
+            Fragen.CollectionChanged += Fragen_CollectionChanged;
+        }
+
+        private void Fragen_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            Fragen.Last().PropertyChanged += PruefungViewModel_PropertyChanged;
+        }
+
+        private void PruefungViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName.Equals("Status"))
+            {
+                OnPropertyChanged(nameof(Bezeichnung));
             }
         }
     }

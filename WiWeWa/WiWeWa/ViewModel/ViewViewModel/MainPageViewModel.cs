@@ -1,4 +1,5 @@
 ﻿using Microsoft.AppCenter.Push;
+using SMPHCracker.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -115,8 +116,6 @@ namespace WiWeWa.ViewModel.ViewViewModel
                 DatabaseViewModel.Instance.ResetPruefungData(Pruefungen.FirstOrDefault(x => x.Bezeichnung == selection));
                 DependencyService.Get<IDependency>().MakeToast($"{selection} zurückgesetzt!");
             }
-
-
         }
     }
 }

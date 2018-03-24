@@ -4,7 +4,6 @@
              BindingContext="{Binding TrialPage, Source={StaticResource ViewModelLocator}}"
              x:Class="WiWeWa.View.TrialPage"
              x:Name="TrialPage"
-             xmlns:flv="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView"
              xmlns:converter="clr-namespace:WiWeWa.View.Converter"
              xmlns:views="clr-namespace:WiWeWa.View"
              BackgroundColor="{StaticResource BackgroundColor}">
@@ -49,18 +48,23 @@
 
             <Label x:Name="antwortMoeglichkeitenLabel" Text="{Binding SelectCounterString}" TextColor="{StaticResource TextColor}" FontAttributes="Bold" Margin="10,0" Grid.Row="2"/>
 
-            <flv:FlowListView FlowItemsSource="{Binding Frage.Antworten}" FlowColumnCount="1" HasUnevenRows="True" VerticalOptions="End" HorizontalOptions="Fill" Grid.Row="3">
-                <flv:FlowListView.FlowColumnTemplate>
+            <ListView ItemsSource="{Binding Frage.Antworten}" HasUnevenRows="True" VerticalOptions="End" HorizontalOptions="Fill" Grid.Row="3">
+                <ListView.ItemTemplate>
                     <DataTemplate>
-                        <Frame BackgroundColor="{Binding Status, Converter={StaticResource AntwortStatusToColorConverter}}" Margin="20,5" VerticalOptions="Fill" HorizontalOptions="Fill">
-                            <Label Text="{Binding AntwortText}" TextColor="{StaticResource TextColor}" VerticalOptions="Center" HorizontalOptions="Center"/>
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding Source={x:Reference TrialPage}, Path=BindingContext.SelectAnswer_Command}" CommandParameter="{Binding .}"/>
-                            </Frame.GestureRecognizers>
-                        </Frame>
+                        <ViewCell>
+                            <StackLayout>
+                                <Frame BackgroundColor="{Binding Status, Converter={StaticResource AntwortStatusToColorConverter}}" Margin="20,5" VerticalOptions="Fill" HorizontalOptions="Fill">
+                                    <Label Text="{Binding AntwortText}" TextColor="{StaticResource TextColor}" VerticalOptions="Center" HorizontalOptions="Center"/>
+                                </Frame>
+                                
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={x:Reference TrialPage}, Path=BindingContext.SelectAnswer_Command}" CommandParameter="{Binding .}"/>
+                                </StackLayout.GestureRecognizers>
+                            </StackLayout>
+                        </ViewCell>
                     </DataTemplate>
-                </flv:FlowListView.FlowColumnTemplate>
-            </flv:FlowListView>
+                </ListView.ItemTemplate>
+            </ListView>
 
             <Button x:Name="nextButton" Text="Next" BackgroundColor="{Binding ButtonColor}" TextColor="{StaticResource TextColor}" IsEnabled="{Binding IsSolvable}" Command="{Binding Next_Command}" Grid.Row="4">
                 <!-- Disables Background coloring with ViewModel!

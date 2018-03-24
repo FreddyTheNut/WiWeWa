@@ -102,7 +102,7 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <AndroidAsset Include="IHKWiso.db" />
+    <EmbeddedResource Include="IHKWiso.db" />
     <None Include="WiWeWa.UWP_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
@@ -176,9 +176,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="DLToolkit.Forms.Controls.FlowListView">
-      <Version>2.0.10</Version>
-    </PackageReference>
     <PackageReference Include="Microsoft.AppCenter">
       <Version>1.5.0</Version>
     </PackageReference>
