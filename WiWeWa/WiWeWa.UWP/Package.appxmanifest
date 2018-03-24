@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="93e7defa-4f39-4576-b685-5e621ce33656" Publisher="CN=82700838-af8f-4418-8f40-71b900a7ad86" Version="1.0.0.0" />
+  <Identity Name="WiWeWa" Publisher="CN=erdling" Version="1.0.0.0" />
   <mp:PhoneIdentity PhoneProductId="ec0cc741-fd3e-485c-81be-68815c480690" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
-    <DisplayName>WiWeWa.UWP</DisplayName>
-    <PublisherDisplayName>82700838-af8f-4418-8f40-71b900a7ad86</PublisherDisplayName>
+    <DisplayName>WiWeWa</DisplayName>
+    <PublisherDisplayName>erdling</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   <Dependencies>
@@ -15,7 +15,7 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="WiWeWa.UWP.App">
-      <uap:VisualElements DisplayName="WiWeWa" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="WiWeWa.UWP" BackgroundColor="transparent">
+      <uap:VisualElements DisplayName="WiWeWa" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="WiWeWa for UWP" BackgroundColor="transparent">
         <uap:LockScreen Notification="badge" BadgeLogo="Assets\BadgeLogo.png" />
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" Square310x310Logo="Assets\LargeTile.png" Square71x71Logo="Assets\SmallTile.png">
         </uap:DefaultTile>
