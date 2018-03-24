@@ -54,17 +54,17 @@ namespace WiWeWa
             Uri releaseNotesUrl = releaseDetails.ReleaseNotesUrl;
 
             // custom dialog
-            var title = "Version " + versionName + " available!";
+            var title = "Version " + versionName + " verfügbar!";
             Task answer;
 
             // On mandatory update, user cannot postpone
             if (releaseDetails.MandatoryUpdate)
             {
-                answer = Current.MainPage.DisplayAlert(title, releaseNotes, "Download and Install");
+                answer = Current.MainPage.DisplayAlert(title, releaseNotes, "Herunterladen und Installieren");
             }
             else
             {
-                answer = Current.MainPage.DisplayAlert(title, releaseNotes, "Download and Install", "Maybe tomorrow...");
+                answer = Current.MainPage.DisplayAlert(title, releaseNotes, "Herunterladen und Installieren", "Später...");
             }
             answer.ContinueWith((task) =>
             {
